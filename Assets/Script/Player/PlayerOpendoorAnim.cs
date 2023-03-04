@@ -16,6 +16,7 @@ public class PlayerOpendoorAnim : MonoBehaviour
     {
         errandOkbtn.DialogueOkEvnt += new EventHandler(StartAnim);
         animator = gameObject.GetComponent<Animator>();
+        gameObject.SetActive(false);
     }
 
     private void StartAnim(object sender, EventArgs e)
@@ -32,7 +33,7 @@ public class PlayerOpendoorAnim : MonoBehaviour
         cameraFade.m_IsFading = false;
         cameraFade.FadeOut(1.2f, true);
         yield return new WaitForSeconds(1.1f);
-        SceneManager.LoadScene("MapScene");
+        SceneManager.LoadScene("MapScene_VR");
 
     }
     /*

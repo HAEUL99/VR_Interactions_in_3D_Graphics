@@ -47,6 +47,7 @@ public class KeyBoardInput : MonoBehaviour
         wordIndex++;
         word = word + alpha;
         inputfield.text = word;
+        Debug.Log($"alpha: {alpha}");
     }
 
 

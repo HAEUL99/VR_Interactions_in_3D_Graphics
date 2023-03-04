@@ -74,7 +74,7 @@ public class VehicleNPC_Nav : CharacterNavigatorController
 
         for (int i = 0; i < 10; i++)
         {
-            Debug.Log($"{i} 초 지남");
+
             yield return new WaitForSeconds(1f);
 
         }

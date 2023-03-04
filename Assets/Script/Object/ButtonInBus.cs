@@ -22,7 +22,7 @@ public class ButtonInBus : MonoBehaviour
     {
         if (!isPressed)
         {
-            button.transform.localPosition = new Vector3(0, 0.003f, 0);
+            button.transform.localPosition = new Vector3(0, 0.855f, 0);
             presser = other.gameObject;
             onPress.Invoke();
 
@@ -34,7 +34,7 @@ public class ButtonInBus : MonoBehaviour
     {
         if (other.gameObject == presser)
         {
-            button.transform.localPosition = new Vector3(0, 0.015f, 0);
+            button.transform.localPosition = new Vector3(0, 0.904f, 0);
             onRelease.Invoke();
             isPressed = false;
         }

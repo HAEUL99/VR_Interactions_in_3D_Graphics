@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ErrandOkbtn : MonoBehaviour
 {
     public event EventHandler DialogueOkEvnt;
-
+    public GameObject playerCharacter;
 
     public class DialogueOkEvntArgs : EventArgs
     {
@@ -21,7 +21,7 @@ public class ErrandOkbtn : MonoBehaviour
 
     public void PressOkbtn()
     {
-
+        playerCharacter.SetActive(true);
         DialogueOkEvntArgs arg = new DialogueOkEvntArgs { };
         this.DialogueOkEvnt(this, arg);
         gameObject.transform.parent.gameObject.SetActive(false);
