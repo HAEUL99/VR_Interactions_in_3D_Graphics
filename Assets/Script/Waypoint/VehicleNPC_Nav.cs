@@ -44,7 +44,7 @@ public class VehicleNPC_Nav : CharacterNavigatorController
 
             if (stopSpeed >= movementSpeed)
             {
-                Debug.Log($"stopSpeed: {stopSpeed}");
+      
                 StartCoroutine(Stop());
                 movementSpeed = 0f;
 

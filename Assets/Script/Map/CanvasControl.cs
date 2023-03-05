@@ -7,15 +7,14 @@ using UnityEngine.InputSystem;
 
 public class CanvasControl : MonoBehaviour
 {
-
+    public InputAction buttonAction;
     private GameObject canvas;
     private bool IsOpen;
 
-    public InputActionProperty RightButtonAction;
-    public InputActionProperty RightButtonAction1;
 
     private void Start()
     {
+        buttonAction.Enable();
         IsOpen = false;
         canvas = GameObject.Find("Canvas");
     }
@@ -23,10 +22,7 @@ public class CanvasControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-
-        /*
-        if (buttonClicked)
+        if (buttonAction.triggered)
         {
             if (IsOpen)
             {
@@ -38,10 +34,7 @@ public class CanvasControl : MonoBehaviour
                 canvas.SetActive(true);
                 IsOpen = !IsOpen;
             }
-                
-             
-
         }
-        */
+
     }
 }
