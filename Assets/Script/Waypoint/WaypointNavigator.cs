@@ -5,7 +5,8 @@ using System;
 
 public class WaypointNavigator : MonoBehaviour
 {
-    CharacterNavigatorController controller;
+    //CharacterNavigatorController controller;
+    VehicleNPC_Nav controller;
     public Waypoint currentWaypoint;
     private string gameObjectName;
     public event EventHandler CurrentWaypointNull;
@@ -14,7 +15,7 @@ public class WaypointNavigator : MonoBehaviour
 
     private void Awake()
     {
-        controller = GetComponent<CharacterNavigatorController>();
+        controller = GetComponent<VehicleNPC_Nav>();
     }
 
     private void Start()

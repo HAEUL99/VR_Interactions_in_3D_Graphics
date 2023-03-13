@@ -14,6 +14,8 @@ public class CharacterNavigatorController : MonoBehaviour
 
     public Vector3 destination;
     public Vector3 lastPosition;
+    public Vector3 velocity;
+
 
 
     public virtual void Init()
@@ -25,7 +27,7 @@ public class CharacterNavigatorController : MonoBehaviour
 
 
 
-    public void Movement(GameObject childobject)
+    public virtual void Movement(GameObject childobject)
     {
         // 목적지와 객체의 포지션이 일치하지 않으면, 
         if (childobject.transform.position != destination)
@@ -33,6 +35,7 @@ public class CharacterNavigatorController : MonoBehaviour
             // 목적지로의 벡터를 구함
             Vector3 destinationDirection = destination - transform.position;
             destinationDirection.y = 0;
+            
             // 목적지까지의 거리 변수
             float destinationDistance = destinationDirection.magnitude;
             if (destinationDistance >= stopDistance)
@@ -40,7 +43,12 @@ public class CharacterNavigatorController : MonoBehaviour
                 reachedDestination = false;
                 // destinationDirectin으로 방향 회전하고, 이동
                 Quaternion targetRotation = Quaternion.LookRotation(destinationDirection);
+                
+                //horizontalInput
                 childobject.transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+               
+
+                //verticalInput
                 childobject.transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
             }
             else
@@ -50,8 +58,9 @@ public class CharacterNavigatorController : MonoBehaviour
 
         }
 
-        lastPosition = childobject.transform.position;
     }
+
+
 
     public void Movement(GameObject childobject, float stopSpeed)
     {
@@ -79,7 +88,10 @@ public class CharacterNavigatorController : MonoBehaviour
 
         }
 
+
         lastPosition = childobject.transform.position;
+
+
     }
 
 
