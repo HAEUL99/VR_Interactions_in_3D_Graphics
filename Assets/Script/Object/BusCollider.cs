@@ -33,6 +33,10 @@ public class BusCollider : MonoBehaviour
                 bus = this.gameObject
             };
             this.PlayerEnterBusEvnt(this, arg);
+
+            
+
+
         }
 
         //near bus stop
