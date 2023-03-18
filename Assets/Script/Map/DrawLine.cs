@@ -31,6 +31,10 @@ public class DrawLine : MonoBehaviour
     //distance
     public float disFromPlayertoPoint;
     public float disFromBustoDest;
+    public float disFromBusStoptoDest;
+
+    public Transform[] destPositions;
+    private int destNum;
 
     //"Marcus Market", "New Life Church", "Rachel Bookkeeping"
     enum DestIndex
@@ -48,8 +52,9 @@ public class DrawLine : MonoBehaviour
 
     void Start()
     {
-        //point
+        //point 
         points = new Transform[pointParent.childCount];
+   
         int i = 0;
         foreach (Transform child in pointParent)
         {
@@ -64,23 +69,19 @@ public class DrawLine : MonoBehaviour
         //nav.reDrawLineEvt += new EventHandler(SetDestination);
         //listofDest.ClickCorrectDestEvnt += new EventHandler(SetDestination);
         
-        nav.reDrawLineEvt += new EventHandler(DrawDottedLine);
-        nav.reDrawLineEvt += new EventHandler(DrawNavLine);
-        //nav.reDrawLineEvt += new EventHandler(SendDistance);
         
+        nav.reDrawLineEvt += new EventHandler(DrawNavLine);
+        nav.reDrawLineEvt += new EventHandler(DrawDottedLine);
+        //nav.reDrawLineEvt += new EventHandler(SendDistance);
+
     }
 
  
 
     public void SetDestination(object sender, EventArgs e)
     {
-        Debug.Log("여기");
         ClickCorrectDestEvntArgs args = e as ClickCorrectDestEvntArgs;
         destname = args.Destname;
-        Debug.Log($"destname: {destname}");
-        //int destNum = Enum.GetNames(typeof(DestIndex)).Length;
-
-
 
     }
 
@@ -125,8 +126,24 @@ public class DrawLine : MonoBehaviour
 
 
         //bus stop -> dest
+        //find Dest Position
+        Transform destTransform = null;
+        switch (destname)
+        {
+            case "marcus market":
+                destTransform = destPositions[0];
+                break;
+            case "new life church":
+                destTransform = destPositions[1];
+                break;
+            case "rachel bookkeeping":
+                destTransform = destPositions[2];
+                break;
+        }
 
-
+        //draw the line from busStop to destination
+        disFromBusStoptoDest = DottedLine.DottedLine.Instance.DrawDottedLineFromObj(points[marcusIndex].position, destTransform.position);
+ 
 
 
         DottedLine.DottedLine.Instance.Render();
@@ -219,7 +236,6 @@ public class DrawLine : MonoBehaviour
         }
         
         
-        Debug.Log($"disFromBustoDest : {disFromBustoDest}");
 
 
     }

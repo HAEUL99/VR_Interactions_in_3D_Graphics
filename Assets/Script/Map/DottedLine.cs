@@ -35,9 +35,6 @@ namespace DottedLine
 
         public void DestroyAllDots()
         {
-
-
-
             foreach (var dot in dots)
             {
                 Destroy(dot.gameObject);
@@ -92,8 +89,6 @@ namespace DottedLine
             return Vector3.Distance(start, end);
 
         }
-
-
 
         public void Render()
         {

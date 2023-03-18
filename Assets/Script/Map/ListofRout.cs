@@ -38,9 +38,15 @@ public class ListofRout : MonoBehaviour
     [SerializeField]
     private TMP_Text firstDist;
     [SerializeField]
+    private TMP_Text secondDist;
+    [SerializeField]
     private GameObject busImg;
     [SerializeField]
     private GameObject arrowImg;
+    [SerializeField]
+    private GameObject arrowImg1;
+    [SerializeField]
+    private GameObject walkingImg1;
     [SerializeField]
     private Button recommendedBtn;
 
@@ -56,6 +62,7 @@ public class ListofRout : MonoBehaviour
 
 
         InitMap = GameObject.Find("InitMap");
+        
         listofDest.ClickCorrectDestEvnt += new EventHandler(ShowUpUI);
         listofDest.ClickCorrectDestEvnt += new EventHandler(nav.FindNearPoint);
         listofDest.ClickCorrectDestEvnt += new EventHandler(ShowUpButton);
@@ -102,12 +109,17 @@ public class ListofRout : MonoBehaviour
         {
             busImg.SetActive(false);
             arrowImg.SetActive(false);
+            arrowImg1.SetActive(false);
+            walkingImg1.SetActive(false);
         }
 
 
         // 나누기 16해서 몫만
-        firstDist.text = ((int)drawLine.disFromPlayertoPoint/16).ToString();
-        
+        if ((drawLine.disFromPlayertoPoint / 16) == 0)
+            firstDist.text = "1";
+        else
+            firstDist.text = ((int)drawLine.disFromPlayertoPoint / 16).ToString();
+        secondDist.text = ((int)drawLine.disFromBusStoptoDest / 16).ToString();
 
     }
 

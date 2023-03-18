@@ -16,11 +16,10 @@ public class DetailRoutine : MonoBehaviour
     public GameObject wholeCam;
     public Transform selfCam;
     private Button expandBtn;
-    private bool IsExpand;
+    public bool IsExpand;
 
 
     public Button[] buttons;
-    private int buttonNum;
     private Transform player;
 
     // 수정필수
@@ -34,7 +33,6 @@ public class DetailRoutine : MonoBehaviour
     void Start()
     {
         IsExpand = false;
-        buttonNum = 3;
 
         player = GameObject.Find("Player").GetComponent<Transform>();
         listofRout.ClickedRecomBtnEvnt += new EventHandler(ShowUpUI);
@@ -53,7 +51,7 @@ public class DetailRoutine : MonoBehaviour
         //지도 전체 비추는 카메라로 전환
         wholeCam.SetActive(true);
         //세부 설명 ui 올라오기
-        Vector2 Pos = new Vector2(0, -555);
+        Vector2 Pos = new Vector2(0, -485);
         gameObject.GetComponent<RectTransform>().DOAnchorPos(Pos, 0.5f);
     }
 
@@ -62,14 +60,14 @@ public class DetailRoutine : MonoBehaviour
         if (IsExpand)
         {
             //세부 설명 ui 내리
-            Vector2 Pos1 = new Vector2(0, -555);
+            Vector2 Pos1 = new Vector2(0, -485);
             gameObject.GetComponent<RectTransform>().DOAnchorPos(Pos1, 0.5f);
             IsExpand = !IsExpand;
         }
         else
         {
             //세부 설명 ui 올라오기
-            Vector2 Pos = new Vector2(0, 0);
+            Vector2 Pos = new Vector2(0, -47);
             gameObject.GetComponent<RectTransform>().DOAnchorPos(Pos, 0.5f);
             IsExpand = !IsExpand;
         }
@@ -92,7 +90,7 @@ public class DetailRoutine : MonoBehaviour
         wholeCam.SetActive(false);
         selfCam.position = new Vector3((playerPos.x + departBusStopPos.x) / 2, 30, (playerPos.z + departBusStopPos.z) / 2);
         selfCam.GetComponent<Camera>().orthographicSize = 88;
-        Vector2 Pos1 = new Vector2(0, -555);
+        Vector2 Pos1 = new Vector2(0, -485);
         gameObject.GetComponent<RectTransform>().DOAnchorPos(Pos1, 0.5f);
         IsExpand = !IsExpand;
     }
@@ -104,7 +102,7 @@ public class DetailRoutine : MonoBehaviour
         selfCam.position = new Vector3((arriveBusStopPos.x + departBusStopPos.x) / 2, 30, (arriveBusStopPos.z + departBusStopPos.z) / 2);
         //수정필요
         selfCam.GetComponent<Camera>().orthographicSize = 230;
-        Vector2 Pos1 = new Vector2(0, -555);
+        Vector2 Pos1 = new Vector2(0, -485);
         gameObject.GetComponent<RectTransform>().DOAnchorPos(Pos1, 0.5f);
         IsExpand = !IsExpand;
     }
@@ -115,7 +113,7 @@ public class DetailRoutine : MonoBehaviour
 
         selfCam.position = new Vector3((arriveBusStopPos.x), 30, (arriveBusStopPos.z));
         selfCam.GetComponent<Camera>().orthographicSize = 88;
-        Vector2 Pos1 = new Vector2(0, -555);
+        Vector2 Pos1 = new Vector2(0, -485);
         gameObject.GetComponent<RectTransform>().DOAnchorPos(Pos1, 0.5f);
         IsExpand = !IsExpand;
     }

@@ -23,8 +23,6 @@ public class ListofDest : MonoBehaviour
     private RectTransform KeyboardRectTrans;
     private MiniMapKeyBoard minimapKeyboard;
 
-
-
     private string[] DestLists =
     {
         "Arethusa al Tavolo", "Barrique Venice", "Bones", "Cafe Provence", "chi SPACCA",
@@ -36,6 +34,9 @@ public class ListofDest : MonoBehaviour
         "JUNGSIK", "L'Auberge", "Le Bilboquet", "Linwoods", "Marea", "Momofuku Ko", "Parc",
         "Market Restaurant", "Mistral", "Neighborhood", "Marcus Market", "New Life Church", "Rachel Bookkeeping"
     };
+
+    public GameObject[] destArrowImgs;
+    private int Imgidx;
 
     private string[] DestListsLower;
 
@@ -54,6 +55,10 @@ public class ListofDest : MonoBehaviour
         KeyboardRectTrans = Keyboard.GetComponent<RectTransform>();
         minimapKeyboard = Keyboard.GetComponent<MiniMapKeyBoard>();
         backButton.onClick.AddListener(backButtonClicked);
+        foreach (GameObject obj in destArrowImgs)
+        {
+            obj.SetActive(false);
+        }
 
     }
 
@@ -102,8 +107,24 @@ public class ListofDest : MonoBehaviour
             buttons[j].GetComponentInChildren<TMP_Text>().text = DestFindValue[j];
             alpha = DestFindValue[j];
 
-            if (string.Equals($"{DestFindValue[j]}", "marcus market") || string.Equals($"{DestFindValue[j]}", "new life church") || string.Equals($"{DestFindValue[j]}", "rachel bookkeeping"))
+            if (string.Equals($"{DestFindValue[j]}", "marcus market") ||
+                string.Equals($"{DestFindValue[j]}", "new life church") ||
+                string.Equals($"{DestFindValue[j]}", "rachel bookkeeping"))
+            {
                 buttons[j].GetComponent<Button>().onClick.AddListener(CorrectDestClick);
+                switch (DestFindValue[j])
+                {
+                    case "marcus market":
+                        Imgidx = 0;
+                        break;
+                    case "new life church":
+                        Imgidx = 1;
+                        break;
+                    case "rachel bookkeeping":
+                        Imgidx = 2;
+                        break;
+                }
+            }
             else
                 buttons[j].GetComponent<Button>().onClick.AddListener(WrongDestClick);
              
@@ -112,6 +133,17 @@ public class ListofDest : MonoBehaviour
 
     void CorrectDestClick()
     {
+        //destination 지도에 표시
+        for(int i = 0; i< destArrowImgs.Length; i++)
+        {
+            if (i == Imgidx)
+                destArrowImgs[i].SetActive(true);
+            else
+                destArrowImgs[i].SetActive(false);
+
+        }
+        
+
         ClickCorrectDestEvntArgs arg = new ClickCorrectDestEvntArgs
         {
             //Destname = "marcus market"
