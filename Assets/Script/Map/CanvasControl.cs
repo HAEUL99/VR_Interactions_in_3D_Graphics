@@ -22,7 +22,8 @@ public class CanvasControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (buttonAction.triggered)
+     
+        if (buttonAction.triggered || Input.GetKeyDown(KeyCode.Space))
         {
             if (IsOpen)
             {

@@ -45,6 +45,8 @@ public class ListofRout : MonoBehaviour
     private Button recommendedBtn;
 
 
+
+
     public event EventHandler ClickedRecomBtnEvnt;
 
     void Start()
@@ -67,10 +69,10 @@ public class ListofRout : MonoBehaviour
     void ShowUpUI(object sender, EventArgs e)
     {
         //키보드 원위치
-        Vector2 Pos1 = new Vector2(0, -480);
+        Vector2 Pos1 = new Vector2(0, -486);
         keyboardRect.DOAnchorPos(Pos1, 0.1f);
         //키보드 끄기
-        keyboard.SetActive(false);
+     
         //EnterInit 끄고, InitMap 켜기
         EnterInit.SetActive(false);
         InitMap.SetActive(true);
@@ -96,7 +98,7 @@ public class ListofRout : MonoBehaviour
 
     void ShowUpButton(object sender, EventArgs e)
     {
-        if (drawLine.disFromBustoDest < 1f) //0이	
+        if (drawLine.disFromBustoDest < 1f) 
         {
             busImg.SetActive(false);
             arrowImg.SetActive(false);
@@ -120,11 +122,18 @@ public class ListofRout : MonoBehaviour
         };
  
         ClickedRecomBtnEvnt(this, arg);
+        //nav.FindNearPoint();
 
     }
 
     void ClickedBackBtn()
     {
-        
+        EnterInit.SetActive(true);
+        Vector2 Pos = new Vector2(514, 0);
+        gameObject.GetComponent<RectTransform>().DOAnchorPos(Pos, 0.5f);
+        Vector2 Pos1 = new Vector2(0, -208);
+        keyboardRect.DOAnchorPos(Pos1, 0.5f);
+
+
     }
 }

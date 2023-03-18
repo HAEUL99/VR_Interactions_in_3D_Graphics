@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MapScene_VR.unity
     guid: d4bf42b682c0942b2807544f9c90deaf
+  - enabled: 1
+    path: Assets/Scenes/MapScene_VR_TEST.unity
+    guid: 36a0ec73cf8064ce88b401e8e0ccc3cf
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: f0872d184ca5d0a4d95699746aba7ce8, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2289d6f33edc34abbbac768619935117, type: 2}

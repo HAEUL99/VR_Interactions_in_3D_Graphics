@@ -15,9 +15,12 @@ public class KeyBoardInput : MonoBehaviour
     public Transform buttonParent;
     private Button[] keybtn;
 
+    public bool nextButton;
+
     private void Start()
     {
         keybtn = new Button[buttonParent.childCount];
+        nextButton = false;
         int i = 0;
         foreach (Transform btn in buttonParent)
         {
@@ -39,6 +42,14 @@ public class KeyBoardInput : MonoBehaviour
         keybtn[27].onClick.AddListener(CheckFunc);
 
 
+    }
+
+    private void Update()
+    {
+        if (nextButton == true)
+        {
+            CheckTest();
+        }
     }
 
 
@@ -84,5 +95,18 @@ public class KeyBoardInput : MonoBehaviour
 
     }
 
+    public void CheckTest()
+    {
+        PlayerNick.Nickname = "haeul";
+
+
+        CompleteEnterNickArgs arg = new CompleteEnterNickArgs
+        {
+            Nickname = word
+        };
+
+        this.CompleteEnterNick(this, arg);
+        gameObject.SetActive(false);
+    }
 
 }

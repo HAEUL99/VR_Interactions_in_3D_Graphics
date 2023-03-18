@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using System.ComponentModel;
 
 public class DrawLine : MonoBehaviour
 {
+    //event receive
+    public ListofDest listofDest;
+
     //Line
     public LineRenderer lineRenderer;
 
@@ -22,11 +25,24 @@ public class DrawLine : MonoBehaviour
 
     //marcus market destIndex
     int marcusIndex;
+    int destIndex;
+    string destname;
 
     //distance
     public float disFromPlayertoPoint;
     public float disFromBustoDest;
 
+    //"Marcus Market", "New Life Church", "Rachel Bookkeeping"
+    enum DestIndex
+    {
+        [Description("marcus market")] //26
+        marcus_market = 26,
+        [Description("new life church")] //4
+        new_life_church = 4,
+        [Description("rachel bookkeeping")] //18
+        rachel_bookkeeping = 18
+
+    }
 
 
 
@@ -44,10 +60,28 @@ public class DrawLine : MonoBehaviour
         nav = FindObjectOfType<Navigation>();     
         player = GameObject.FindWithTag("Player").GetComponent<Transform>();
 
-        marcusIndex = 26;
+        //marcusIndex = 26;
+        //nav.reDrawLineEvt += new EventHandler(SetDestination);
+        //listofDest.ClickCorrectDestEvnt += new EventHandler(SetDestination);
+        
         nav.reDrawLineEvt += new EventHandler(DrawDottedLine);
         nav.reDrawLineEvt += new EventHandler(DrawNavLine);
         //nav.reDrawLineEvt += new EventHandler(SendDistance);
+        
+    }
+
+ 
+
+    public void SetDestination(object sender, EventArgs e)
+    {
+        Debug.Log("여기");
+        ClickCorrectDestEvntArgs args = e as ClickCorrectDestEvntArgs;
+        destname = args.Destname;
+        Debug.Log($"destname: {destname}");
+        //int destNum = Enum.GetNames(typeof(DestIndex)).Length;
+
+
+
     }
 
 
@@ -89,10 +123,11 @@ public class DrawLine : MonoBehaviour
             }
         }
 
-        Debug.Log($"disFromPlayertoPoint: {disFromPlayertoPoint}");
 
         //bus stop -> dest
-        
+
+
+
 
         DottedLine.DottedLine.Instance.Render();
 
@@ -111,6 +146,26 @@ public class DrawLine : MonoBehaviour
         lineRenderer.material.SetColor("_Color", Color.red);
         lineRenderer.startWidth = 5f;
         lineRenderer.endWidth = 5f;
+
+        //set Destination
+        destname = listofDest.alpha;
+
+
+        {
+            switch (destname)
+            {
+                case "marcus market":
+                    marcusIndex = 26;
+                    break;
+                case "new life church":
+                    marcusIndex = 4;
+                    break;
+                case "rachel bookkeeping":
+                    marcusIndex = 18;
+                    break;
+            }
+
+        }
 
         {
             

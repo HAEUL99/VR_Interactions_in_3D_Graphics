@@ -6,23 +6,35 @@ using System;
 public class WaypointNavigator : MonoBehaviour
 {
     //CharacterNavigatorController controller;
-    VehicleNPC_Nav controller;
+    CharacterNavigatorController controller;
     public Waypoint currentWaypoint;
     private string gameObjectName;
     public event EventHandler CurrentWaypointNull;
     CurrentWaypointNullArgs arg;
 
 
-    private void Awake()
-    {
-        controller = GetComponent<VehicleNPC_Nav>();
-    }
 
     private void Start()
     {
-        controller.SetDestination(currentWaypoint.GetPosition());
         gameObjectName = gameObject.name;
+        if (gameObjectName == "Mother")
+        {
+            controller = GetComponent<MomNPC_Nav>();
+        }
+        else if (gameObjectName == "SchoolBus")
+        {
+            controller = GetComponent<VehicleLoginScene_Nav>();
+        }
+        else
+        {
+            controller = GetComponent<VehicleNPC_Nav>();
+        }
+
+        controller.SetDestination(currentWaypoint.GetPosition());
+        
         arg = new CurrentWaypointNullArgs();
+        
+
     }
 
     public class CurrentWaypointNullArgs : EventArgs

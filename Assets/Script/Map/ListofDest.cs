@@ -1,6 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +19,11 @@ public class ListofDest : MonoBehaviour
     //event send
     public event EventHandler ClickCorrectDestEvnt;
 
+    public GameObject Keyboard;
+    private RectTransform KeyboardRectTrans;
+    private MiniMapKeyBoard minimapKeyboard;
+
+
 
     private string[] DestLists =
     {
@@ -30,7 +34,7 @@ public class ListofDest : MonoBehaviour
         "Uchi - Dallas", "Vetri Cucina", "Yvonne's", "Zahav", "Zero Restaurant", "Bavette's",
         "BONDST", "Charleston", "Coppa", "Double Knot", "Geronimo", "The Grill", "Hersh's",
         "JUNGSIK", "L'Auberge", "Le Bilboquet", "Linwoods", "Marea", "Momofuku Ko", "Parc",
-        "Market Restaurant", "Mistral", "Neighborhood", "Marcus Market"
+        "Market Restaurant", "Mistral", "Neighborhood", "Marcus Market", "New Life Church", "Rachel Bookkeeping"
     };
 
     private string[] DestListsLower;
@@ -39,20 +43,24 @@ public class ListofDest : MonoBehaviour
     public GameObject[] buttons;
 
     private int buttonNum;
-
+    private Button backButton;
+    public string alpha;
 
     private void Start()
     {
-        
-
         mapKeyboard.EnterDestEvnt += new EventHandler(SearchingName);
         controlMapUI.ShowEnterInitEvnt += new EventHandler(Init);
+        backButton = gameObject.transform.Find("BackButton").GetComponent<Button>();
+        KeyboardRectTrans = Keyboard.GetComponent<RectTransform>();
+        minimapKeyboard = Keyboard.GetComponent<MiniMapKeyBoard>();
+        backButton.onClick.AddListener(backButtonClicked);
+
     }
 
     void Init(object sender, EventArgs e)
     {
 
-       
+
         buttonNum = buttonParent.GetComponent<Transform>().childCount;
 
         for (int j = 0; j < buttonNum; j++)
@@ -72,6 +80,7 @@ public class ListofDest : MonoBehaviour
 
     void SearchingName(object sender, EventArgs e)
     {
+   
         for (int i = 0; i < buttonNum; i++)
         {
             buttons[i].SetActive(false);
@@ -91,13 +100,13 @@ public class ListofDest : MonoBehaviour
         {
             buttons[j].SetActive(true);
             buttons[j].GetComponentInChildren<TMP_Text>().text = DestFindValue[j];
-            string alpha = DestFindValue[j];
+            alpha = DestFindValue[j];
 
-            if (string.Equals($"{DestFindValue[j]}", "marcus market"))
+            if (string.Equals($"{DestFindValue[j]}", "marcus market") || string.Equals($"{DestFindValue[j]}", "new life church") || string.Equals($"{DestFindValue[j]}", "rachel bookkeeping"))
                 buttons[j].GetComponent<Button>().onClick.AddListener(CorrectDestClick);
             else
                 buttons[j].GetComponent<Button>().onClick.AddListener(WrongDestClick);
-
+             
         }
     }
 
@@ -105,9 +114,11 @@ public class ListofDest : MonoBehaviour
     {
         ClickCorrectDestEvntArgs arg = new ClickCorrectDestEvntArgs
         {
-            Destname = "marcus market"
+            //Destname = "marcus market"
+            Destname = alpha
+            
         };
-        { Debug.Log($"correct"); }
+
         this.ClickCorrectDestEvnt(this, arg);
     }
 
@@ -116,7 +127,13 @@ public class ListofDest : MonoBehaviour
     void WrongDestClick() { Debug.Log($"wrong"); }
 
 
-
+    void backButtonClicked()
+    {
+        gameObject.SetActive(false);
+        Vector2 Pos = new Vector2(0, -486);
+        KeyboardRectTrans.DOAnchorPos(Pos, 0.5f);
+        minimapKeyboard.DeleteAllFunc();
+    }
 
 
 }

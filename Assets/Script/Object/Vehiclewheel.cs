@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Vehiclewheel : MonoBehaviour
 {
-    public SphereCollider[] wheelCol;
+
     public Transform[] wheelTransform;
 
     private void Update()

@@ -7,7 +7,9 @@ using System;
 using TMPro;
 
 public class ShowEnterInitEvntArgs : EventArgs
-{ }
+{
+   
+}
 
 public class ControlMapUI : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class ControlMapUI : MonoBehaviour
     public TMP_Text time;
     public event EventHandler ShowEnterInitEvnt;
     public GameObject wholeCam;
+    public  Vector2 keyBoardPos;
 
     // Start is called before the first frame update
     void Start()
@@ -26,13 +29,16 @@ public class ControlMapUI : MonoBehaviour
         EnterInitDes = EnterInitDesobj.GetComponent<RectTransform>();
         //NormalMap = NormalMapobj.GetComponent<RectTransform>();
         Keyboard = Keyboardobj.GetComponent<RectTransform>();
-
+        keyBoardPos = Keyboard.position;
         wholeCam.SetActive(false);
         Keyboardobj.SetActive(false);
+
         EnterInitDesobj.SetActive(false);
         //NormalMapobj.SetActive(false);
         //InitMap.DOAnchorPos(Vector2.zero, 0.25f);
         gameObject.SetActive(false);
+
+
     }
 
     // Update is called once per frame
@@ -51,12 +57,12 @@ public class ControlMapUI : MonoBehaviour
 
     void EnterInit_InputField()
     {
-        InitMapobj.SetActive(false);
+        //InitMapobj.SetActive(false);
         EnterInitDesobj.SetActive(true);
 
         ShowEnterInitEvntArgs arg = new ShowEnterInitEvntArgs
         {
-
+            
         };
         this.ShowEnterInitEvnt(this, arg);
 

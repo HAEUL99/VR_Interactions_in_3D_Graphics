@@ -87,6 +87,16 @@ public class MiniMapKeyBoard : MonoBehaviour
         this.EnterDestEvnt(this, arg);
     }
 
+    public void DeleteAllFunc()
+    {
+        if (wordIndex > 0)
+        {
+            inputfield.text = "";
+            wordIndex = 0;
+            word = "";
+        }
+    }
+
     public void SpaceFunc()
     {
         wordIndex++;

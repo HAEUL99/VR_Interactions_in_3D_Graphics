@@ -149,7 +149,8 @@ public class Navigation : MonoBehaviour
 
 
     }
-    void FindNearPoint()
+
+    public void FindNearPoint()
     {
 
         //첫번째 가까운거
