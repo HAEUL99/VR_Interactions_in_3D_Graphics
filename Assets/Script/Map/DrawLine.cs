@@ -227,11 +227,7 @@ public class DrawLine : MonoBehaviour
         next1 = 0;
         if (busStopIndexinIndex <= marcusIndex)
         {
-            //for (int i = busStopIndexinIndex; i < marcusIndex + 1; i++)
-            //{
-            //    if (i != marcusIndex)
-            //        reverseDist += Vector3.Distance(points[i].position, points[++i].position);
-            //}
+
             for (int i = busStopIndexinIndex; i > 0; i--)
             {
                 next1 = i - 1;
@@ -252,14 +248,7 @@ public class DrawLine : MonoBehaviour
             }
         }
 
-
-
- 
-        //비교
-        Debug.Log($"forwardDist: {forwardDist}");
-        Debug.Log($"reverseDist: {reverseDist}");
         IsForward = (forwardDist <= reverseDist) ? true : false;
-        Debug.Log($"IsForward: {IsForward}");
 
     }
 
@@ -302,18 +291,10 @@ public class DrawLine : MonoBehaviour
             }
         }
 
-
-
-
         //bus stop -> dest
         //draw the line from busStop to destination
         disFromBusStoptoDest = DottedLine.DottedLine.Instance.DrawDottedLineFromObj(points[marcusIndex].position, destTransform.position);
- 
-
-
         DottedLine.DottedLine.Instance.Render();
-
-
     }
 
     public void DrawNavLine(object sender, EventArgs e)
@@ -418,10 +399,6 @@ public class DrawLine : MonoBehaviour
 
             }
         }
-
-   
-
-
 
 
     }

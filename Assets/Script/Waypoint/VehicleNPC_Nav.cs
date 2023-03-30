@@ -45,8 +45,11 @@ public class VehicleNPC_Nav : CharacterNavigatorController
     private GameObject centerofMass;
 
 
+
+
     public override void Init()
     {
+
         movementSpeed = 4;
         rotationSpeed = 120;
         stopDistance = 2f;
@@ -168,6 +171,7 @@ public class VehicleNPC_Nav : CharacterNavigatorController
         IsNearBusStop = false;
         frontdoorRight.SetBool("IsOpen", false);
         frontdoorLeft.SetBool("IsOpen", false);
+
     }
 
 }

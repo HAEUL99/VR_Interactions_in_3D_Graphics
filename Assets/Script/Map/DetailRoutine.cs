@@ -81,8 +81,6 @@ public class DetailRoutine : MonoBehaviour
         departBusStopPos = arg.nearBusStopPos;
         arriveBusStopPos = destPos.position ;
 
-
-
     }
 
     void ToPlayerPos()

@@ -35,14 +35,14 @@ public class CameraControl : MonoBehaviour
     private void ChangeScene(object sender, EventArgs e)
     {
         camera.transform.position = positions[0].transform.position;
-        camera.transform.rotation = Quaternion.Euler(positions[0].transform.rotation.x, positions[0].transform.rotation.y, positions[0].transform.rotation.z);
+        camera.transform.rotation = Quaternion.Euler(0, 180, 0);
     }
 
     private void ChangeSecene1(object sender, EventArgs e)
     {
 
         camera.transform.position = positions[1].transform.position;
-        camera.transform.rotation = Quaternion.Euler(positions[1].transform.rotation.x, positions[1].transform.rotation.y, positions[1].transform.rotation.z);
+        //camera.transform.rotation = Quaternion.Euler(positions[1].transform.rotation.x, positions[1].transform.rotation.y, positions[1].transform.rotation.z);
     }
     
 }

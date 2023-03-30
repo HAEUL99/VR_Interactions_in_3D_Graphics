@@ -22,7 +22,6 @@ public class ListofRout : MonoBehaviour
     public Navigation nav;
 
     private Transform myPos;
-    private TMP_InputField myPosInput;
     private Transform destPos;
 
     //UI
@@ -40,6 +39,10 @@ public class ListofRout : MonoBehaviour
     [SerializeField]
     private TMP_Text secondDist;
     [SerializeField]
+    private TMP_Text detailfirstDist;
+    [SerializeField]
+    private TMP_Text detailsecondDist;
+    [SerializeField]
     private GameObject busImg;
     [SerializeField]
     private GameObject arrowImg;
@@ -48,7 +51,17 @@ public class ListofRout : MonoBehaviour
     [SerializeField]
     private GameObject walkingImg1;
     [SerializeField]
+    private GameObject detailbusImg;
+    [SerializeField]
+    private GameObject detwalkingImg1;
+    [SerializeField]
+    private GameObject detarrowImg;
+    [SerializeField]
+    private GameObject detarrowImg1;
+    [SerializeField]
     private Button recommendedBtn;
+    [SerializeField]
+    private GameObject destNameObj;
 
 
 
@@ -100,6 +113,8 @@ public class ListofRout : MonoBehaviour
         destPos = gameObject.GetComponent<Transform>().FindChild("DestPos");
         destPos.GetComponent<TMP_InputField>().text = $"{destname}";
 
+        //destNameObj.GetComponent<TMP_Text>().text = $"{destname}";
+
 
     }
 
@@ -111,15 +126,28 @@ public class ListofRout : MonoBehaviour
             arrowImg.SetActive(false);
             arrowImg1.SetActive(false);
             walkingImg1.SetActive(false);
+            //detail
+            detailbusImg.SetActive(false);
+            detwalkingImg1.SetActive(false);
+            detarrowImg.SetActive(false);
+            detarrowImg1.SetActive(false);
         }
 
 
         // 나누기 16해서 몫만
         if ((drawLine.disFromPlayertoPoint / 16) == 0)
+        {
             firstDist.text = "1";
+            detailfirstDist.text = "1";
+        }
         else
+        {
             firstDist.text = ((int)drawLine.disFromPlayertoPoint / 16).ToString();
+            detailfirstDist.text = ((int)drawLine.disFromPlayertoPoint / 16).ToString();
+        }
+            
         secondDist.text = ((int)drawLine.disFromBusStoptoDest / 16).ToString();
+        detailsecondDist.text = ((int)drawLine.disFromBusStoptoDest / 16).ToString();
 
     }
 

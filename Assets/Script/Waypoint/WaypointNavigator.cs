@@ -25,6 +25,10 @@ public class WaypointNavigator : MonoBehaviour
         {
             controller = GetComponent<VehicleLoginScene_Nav>();
         }
+        else if (gameObjectName == "TutorialBus")
+        {
+            controller = GetComponent<VehicleNPCTutorial_Nav>();
+        }
         else
         {
             controller = GetComponent<VehicleNPC_Nav>();
