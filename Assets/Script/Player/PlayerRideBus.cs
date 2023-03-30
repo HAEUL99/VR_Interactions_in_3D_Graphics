@@ -2,15 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.XR.Content.Interaction;
+using UnityEngine.XR.Interaction.Toolkit;
+
+public class BusGetOffEvntArgs : EventArgs
+{
+    public bool IsPlayerPushBtn;
+}
+
 
 public class PlayerRideBus : MonoBehaviour
 {
 
     public BusCollider busCollider;
+    public GameObject pushButton;
 
-
-    //확인후 private으로 바꾸기 
     private Transform bus;
     private GameObject playerSeat;
     //public GameObject busRideUI;
@@ -18,7 +26,11 @@ public class PlayerRideBus : MonoBehaviour
     public bool IsGetOff;
     public Transform Bus1_BusStopParent;
     private Transform[] BusStopSpawnPos;
-    
+
+    //tutorial
+    public bool IsPlayerPushBtn;
+    public bool IsTutorial;
+    public event EventHandler BusGetOffEvnt;
 
 
     enum BusStopName
@@ -40,6 +52,7 @@ public class PlayerRideBus : MonoBehaviour
     void Start()
     {
         IsClicked = false;
+ 
         //busRideUI.SetActive(false);
         busCollider.PlayerEnterBusEvnt += new EventHandler(ShowUI);
         busCollider.ArrivedNearBusStopEvnt += new EventHandler(CheckGetOff);
@@ -50,6 +63,10 @@ public class PlayerRideBus : MonoBehaviour
             BusStopSpawnPos[i] = Bus1_BusStopParent.GetChild(i).GetChild(0);
             
         }
+
+        //button pushed event
+        UnityEvent pressEvnt = pushButton.GetComponent<XRPushButton>().m_OnPress;
+        pressEvnt.AddListener(GetOffBus);
     }
 
     private void Update()
@@ -61,9 +78,16 @@ public class PlayerRideBus : MonoBehaviour
             gameObject.transform.SetParent(bus, false);
             gameObject.transform.position = playerSeat.transform.position;
 
+           
         }
 
         
+    }
+
+    void GetOffBus()
+    {
+        IsGetOff = true;
+        IsPlayerPushBtn = true;
     }
 
 
@@ -72,13 +96,7 @@ public class PlayerRideBus : MonoBehaviour
         PlayerEnterBusEvntArgs arg = e as PlayerEnterBusEvntArgs;
         playerSeat = arg.bus.transform.parent.transform.Find("PlayerSeat").gameObject;
         bus = arg.bus.transform.parent;
-        //show the Ui
-        //busRideUI.SetActive(true);
-        //Button yes = busRideUI.GetComponentInChildren<Button>();
         IsClicked = true;
-
-        //yes.onClick.AddListener(delegate { PlayerPlacement(arg.bus.transform.parent.gameObject); });
-
 
     }
 
@@ -92,10 +110,25 @@ public class PlayerRideBus : MonoBehaviour
 
     private void CheckGetOff(object sender, EventArgs e)
     {
+        if (IsTutorial && IsClicked)
+        {
+            IsGetOff = true;
+            BusGetOffEvntArgs args = new BusGetOffEvntArgs
+            {
+                //Destname = "marcus market"
+                IsPlayerPushBtn = IsPlayerPushBtn
+
+            };
+
+            this.BusGetOffEvnt(this, args);
+
+        }
+
         if (!IsGetOff)
         {
             return;
         }
+
 
         ArrivedNearBusStopEvntArgs arg = e as ArrivedNearBusStopEvntArgs;
         string currentBusStop = arg.currentBusStopName;
@@ -106,6 +139,10 @@ public class PlayerRideBus : MonoBehaviour
         gameObject.transform.position = BusStopSpawnPos[currentBusStopnInt].position;
         IsGetOff = false;
         IsClicked = false;
+
+       
+
+        
 
     }
 }

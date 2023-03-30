@@ -46,7 +46,7 @@ namespace UnityEngine.XR.Content.Interaction
 
         [SerializeField]
         [Tooltip("Events to trigger when the button is pressed")]
-        UnityEvent m_OnPress;
+        public UnityEvent m_OnPress;
 
         [SerializeField]
         [Tooltip("Events to trigger when the button is released")]
