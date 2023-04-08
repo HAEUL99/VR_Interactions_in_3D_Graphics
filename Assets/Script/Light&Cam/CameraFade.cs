@@ -12,7 +12,7 @@ public class CameraFade : MonoBehaviour
 
     [SerializeField] private Image m_FadeImage;                     // Reference to the image that covers the screen.
     [SerializeField] private Color m_FadeColor = Color.black;       // The colour the image fades out to.
-    [SerializeField] private float m_FadeDuration = 1.2f;           // How long it takes to fade in seconds.
+    [SerializeField] private float m_FadeDuration = 15f;           // How long it takes to fade in seconds.
     [SerializeField] private bool m_FadeInOnSceneLoad = true;      // Whether a fade in should happen as soon as the scene is loaded.
     [SerializeField] private bool m_FadeInOnStart = true;          // Whether a fade in should happen just but Updates start.
 
