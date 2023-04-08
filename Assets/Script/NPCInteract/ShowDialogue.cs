@@ -15,6 +15,9 @@ public class VRInteractionTutorialEvntArgs : EventArgs
 
 }
 
+public class VRInteractionMinimapEvntArgs : EventArgs { }
+public class VRInteractionListEvntArgs : EventArgs { }
+
 public class ShowDialogue : MonoBehaviour
 {
     public TextMeshProUGUI dialogueText;
@@ -30,6 +33,8 @@ public class ShowDialogue : MonoBehaviour
     public int VrInput;
     public event EventHandler VRInteractionTutorialEvnt;
     public bool Ischecked;
+    public event EventHandler VRInteractionMinimapEvnt; //rightPri
+    public event EventHandler VRInteractionListEvnt; //leftPri
 
     //bus tutorial
     public event EventHandler BusTutorialStartEvnt;
@@ -42,8 +47,7 @@ public class ShowDialogue : MonoBehaviour
 
 
     //UI
-    public GameObject mapUi;
-    public GameObject errandListUi;
+
 
     private void Start()
     {
@@ -53,8 +57,14 @@ public class ShowDialogue : MonoBehaviour
         momnpc_Nav.StartDialogueEvnt += new EventHandler(StartDialogueEvntSender);
         dialogueText.text = string.Empty;
         audioSource = this.gameObject.AddComponent<AudioSource>();
-        mapUi.SetActive(false);
-        errandListUi.SetActive(false);
+        
+
+        //Input
+        leftThum.Enable();
+        rightThum.Enable();
+        leftPri.Enable();
+        rightPri.Enable();
+
     }
 
 
@@ -99,7 +109,7 @@ public class ShowDialogue : MonoBehaviour
     IEnumerator TypeLineAfterFirst()
     {
         IsSentenseFinished = false;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         dialogueText.text = string.Empty;
         maxVisibleCharacters = 0;
         foreach (char c in lines[index].ToCharArray())
@@ -159,8 +169,8 @@ public class ShowDialogue : MonoBehaviour
 
     public void NextLine()
     {
-        mapUi.SetActive(false);
-        errandListUi.SetActive(false);
+        //mapUi.SetActive(false);
+        //errandListUi.SetActive(false);
         if (index < lines.Length - 1)
         {
             index++;
@@ -186,17 +196,28 @@ public class ShowDialogue : MonoBehaviour
         if (leftThum.triggered || Input.GetKeyDown(KeyCode.A))
         {
             VrInput = 1;
-            mapUi.SetActive(true);
+            //mapUi.SetActive(true);
         }
         if (rightThum.triggered || Input.GetKeyDown(KeyCode.B))
         {
             VrInput = 2;
-            errandListUi.SetActive(true);
+            //errandListUi.SetActive(true);
         }
-        if (leftPri.triggered || Input.GetKeyDown(KeyCode.C))
+        if (leftPri.triggered || Input.GetKeyDown(KeyCode.C)) //list
+        {
             VrInput = 3;
-        if (rightPri.triggered || Input.GetKeyDown(KeyCode.D))
+            VRInteractionListEvntArgs arg = new VRInteractionListEvntArgs { };
+            this.VRInteractionListEvnt(this, arg);
+          
+        }
+        if (rightPri.triggered || Input.GetKeyDown(KeyCode.D)) //minimap
+        {
             VrInput = 4;
+            VRInteractionMinimapEvntArgs arg1 = new VRInteractionMinimapEvntArgs { };
+            this.VRInteractionMinimapEvnt(this, arg1);
+
+        }
+            
     }
 
     void VRInputAndIndexCheck()
@@ -204,22 +225,35 @@ public class ShowDialogue : MonoBehaviour
         if (index == 4)
         {
             if (VrInput == 1)
+            {
+         
                 NextLine();
+            }
         }
         else if (index == 5)
         {
             if (VrInput == 2)
+            {
+          
                 NextLine();
+            }
         }
         else if (index == 6)
         {
-            if (VrInput == 3)
+            if (VrInput == 3) 
+            {
+
                 NextLine();
+            }
+                
         }
         else if (index == 7)
         {
             if (VrInput == 4)
+            {
+
                 NextLine();
+            }
         }
         //bus getting on off tutorial
         else if (index == 9)

@@ -20,6 +20,7 @@ public class KeyBoardInput : MonoBehaviour
     private void Start()
     {
         keybtn = new Button[buttonParent.childCount];
+     
         nextButton = false;
         int i = 0;
         foreach (Transform btn in buttonParent)
@@ -58,7 +59,7 @@ public class KeyBoardInput : MonoBehaviour
         wordIndex++;
         word = word + alpha;
         inputfield.text = word;
-        Debug.Log($"alpha: {alpha}");
+
     }
 
 

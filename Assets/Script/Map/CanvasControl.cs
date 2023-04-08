@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 
 public class CanvasControl : MonoBehaviour
 {
+    
     public InputAction buttonAction;
     private GameObject canvas;
     private bool IsOpen;
@@ -38,4 +39,5 @@ public class CanvasControl : MonoBehaviour
         }
 
     }
+    
 }
