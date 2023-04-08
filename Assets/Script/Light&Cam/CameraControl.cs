@@ -9,13 +9,13 @@ public class CameraControl : MonoBehaviour
 
     public GameObject[] positions;
     public KeyBoardInput keyBoardinput;
-    public ErrandOkbtn errandOkbtn;
+    public NPCInteractable npcInteractable;
 
     public void Start()
     {
 
         keyBoardinput.CompleteEnterNick += new EventHandler(ChangeScene);
-        errandOkbtn.DialogueOkEvnt += new EventHandler(ChangeSecene1);
+        npcInteractable.FinishTutorialEvnt += new EventHandler(ChangeSecene1);
     }
 
     /*
@@ -42,6 +42,7 @@ public class CameraControl : MonoBehaviour
     {
 
         camera.transform.position = positions[1].transform.position;
+        camera.transform.rotation = Quaternion.Euler(0, 9, 0);
         //camera.transform.rotation = Quaternion.Euler(positions[1].transform.rotation.x, positions[1].transform.rotation.y, positions[1].transform.rotation.z);
     }
     

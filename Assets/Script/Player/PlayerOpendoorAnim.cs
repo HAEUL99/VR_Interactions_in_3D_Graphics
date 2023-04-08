@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerOpendoorAnim : MonoBehaviour
 {
-    public ErrandOkbtn errandOkbtn;
+    public NPCInteractable npcInteractable;
     private Animator animator;
     private bool IsEvntSend = false;
 
@@ -14,7 +14,7 @@ public class PlayerOpendoorAnim : MonoBehaviour
 
     private void Start()
     {
-        errandOkbtn.DialogueOkEvnt += new EventHandler(StartAnim);
+        npcInteractable.FinishTutorialEvnt += new EventHandler(StartAnim);
         animator = gameObject.GetComponent<Animator>();
         gameObject.SetActive(false);
     }

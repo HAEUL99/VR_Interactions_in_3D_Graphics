@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - busstop
+  - Destroyer
+  - Projectile
+  - Water
+  - Flame
+  - boxes
   layers:
   - Default
   - TransparentFX

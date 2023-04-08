@@ -31,7 +31,9 @@ public class PlayerRideBus : MonoBehaviour
     public bool IsPlayerPushBtn;
     public bool IsTutorial;
     public event EventHandler BusGetOffEvnt;
-
+    public GameObject Mom1;
+    public GameObject Mom2;
+    public GameObject Mom2Text;
 
     enum BusStopName
     {
@@ -55,9 +57,17 @@ public class PlayerRideBus : MonoBehaviour
  
         //busRideUI.SetActive(false);
         busCollider.PlayerEnterBusEvnt += new EventHandler(ShowUI);
+        if (IsTutorial)
+        {
+            //busCollider.PlayerEnterBusEvnt += new EventHandler(GameObjectSetting);
+            Mom1.SetActive(false);
+            Mom2.SetActive(false);
+        }
+        busCollider.PlayerEnterBusEvnt += new EventHandler(GameObjectSetting);
         busCollider.ArrivedNearBusStopEvnt += new EventHandler(CheckGetOff);
         BusStopSpawnPos = new Transform[Bus1_BusStopParent.childCount];
-       
+
+
         for (int i = 0; i < 9; i++)
         {
             BusStopSpawnPos[i] = Bus1_BusStopParent.GetChild(i).GetChild(0);
@@ -90,6 +100,14 @@ public class PlayerRideBus : MonoBehaviour
         IsPlayerPushBtn = true;
     }
 
+    private void GameObjectSetting(object sender, EventArgs e)
+    {
+        if (!IsTutorial)
+            return;
+        Mom1.SetActive(false);
+        Mom2.SetActive(true);
+        Mom2Text.GetComponent<ShowDialogueBus>().Init();
+    }
 
     private void ShowUI(object sender, EventArgs e)
     {
@@ -97,6 +115,7 @@ public class PlayerRideBus : MonoBehaviour
         playerSeat = arg.bus.transform.parent.transform.Find("PlayerSeat").gameObject;
         bus = arg.bus.transform.parent;
         IsClicked = true;
+        
 
     }
 
@@ -139,10 +158,12 @@ public class PlayerRideBus : MonoBehaviour
         gameObject.transform.position = BusStopSpawnPos[currentBusStopnInt].position;
         IsGetOff = false;
         IsClicked = false;
+        Mom2.SetActive(false);
 
-       
 
-        
+
+
+
 
     }
 }

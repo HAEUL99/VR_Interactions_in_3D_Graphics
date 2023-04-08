@@ -13,6 +13,11 @@ public class MomNPC_Nav : CharacterNavigatorController
     public event EventHandler StartDialogueEvnt;
     StartDialogueArgs arg;
 
+    public ShowDialogue showDialogue;
+    public GameObject Mom;
+
+
+
     public override void Init()
     {
         movementSpeed = 2f;
@@ -23,8 +28,13 @@ public class MomNPC_Nav : CharacterNavigatorController
     public void Start()
     {
         keyBoardinput.CompleteEnterNick += new EventHandler(StartAnimation);
-        this.gameObject.GetComponent<WaypointNavigator>().CurrentWaypointNull += new EventHandler(StopAnimation);
+        waypointNavigator.CurrentWaypointNull += new EventHandler(StopAnimation);
         animator = GetComponent<Animator>();
+   
+        waypointNavigator.CurrentWaypointNull1 += new EventHandler(WaitingAnimation);
+        showDialogue.VRInteractionTutorialEvnt += new EventHandler(WalkingAnimation);
+
+
     }
 
     private void StartAnimation(object sender, EventArgs e)
@@ -45,7 +55,21 @@ public class MomNPC_Nav : CharacterNavigatorController
 
     }
 
+    public void WalkingAnimation(object sender, EventArgs e)
+    {
+        animator.SetBool("IsStop", false);
+        animator.SetBool("IsTalk", false);
+        animator.SetBool("IsWalk", true);
+        IsCheck = true;
+    }
 
+    public void WaitingAnimation(object sender, EventArgs e)
+    {
+        animator.SetBool("IsWaiting", true);
+        animator.SetBool("IsWalk", false);
+        IsCheck = false;
+        Mom.transform.Rotate(0.0f, 180.0f, 0.0f);
+    }
 
     public void Update()
     {
@@ -61,6 +85,8 @@ public class MomNPC_Nav : CharacterNavigatorController
             this.StartDialogueEvnt(this, arg);
             IsEvntSend = true;
         }
+
+        
 
     }
 }

@@ -17,6 +17,8 @@ public class TutorialBusGetOff : MonoBehaviour
     public GameObject spawnPoint;
     //at the busStop
     public GameObject Mom1;
+    public GameObject Mom1Text;
+
     //on the bus
     public GameObject Mom2;
     public event EventHandler BusTutorialStartEvnt;
@@ -32,6 +34,13 @@ public class TutorialBusGetOff : MonoBehaviour
 
     //spawn to home
     public GameObject spawnPoint1;
+
+    //sound
+    public int maxVisibleCharacters;
+    public DialogueAudioInfoSO currentAudioInfo;
+    private AudioSource audioSource;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,8 +48,9 @@ public class TutorialBusGetOff : MonoBehaviour
         showDialogue.BusTutorialStartEvnt += new EventHandler(BusTutorialStart);
         playerRidebus.BusGetOffEvnt += new EventHandler(CheckIfPlayerPushBtn);
         bus.SetActive(false);
-        Mom1.SetActive(false);
+   
         dialougeImg.SetActive(false);
+        audioSource = this.gameObject.AddComponent<AudioSource>();
 
     }
 
@@ -53,7 +63,8 @@ public class TutorialBusGetOff : MonoBehaviour
         bus.SetActive(true);
         //char show
         Mom1.SetActive(true);
-        Mom2.SetActive(true);
+        Mom1Text.GetComponent<ShowDialogueBus>().Init();
+
     }
 
     public void CheckIfPlayerPushBtn(object sender, EventArgs e)
@@ -82,10 +93,13 @@ public class TutorialBusGetOff : MonoBehaviour
         for(int i = 0; i < 2; i++)
         {
             dialogueText.text = "";
+            maxVisibleCharacters = 0;
             //yield return null;
             foreach (char c in lines[index].ToCharArray())
             {
                 dialogueText.text += c;
+                PlayDialogueSound(maxVisibleCharacters, dialogueText.text[maxVisibleCharacters]);
+                maxVisibleCharacters++;
                 yield return new WaitForSeconds(textSpeed);
             }
 
@@ -102,5 +116,48 @@ public class TutorialBusGetOff : MonoBehaviour
         player.transform.position = spawnPoint1.transform.position;
         showDialogue.NextLine();
  
+    }
+
+    private void PlayDialogueSound(int currentDisplayedCharacterCount, char currentCharacter)
+    {
+        // set variables for the below based on our config
+        AudioClip[] dialogueTypingSoundClips = currentAudioInfo.dialogueTypingSoundClips;
+        int frequencyLevel = currentAudioInfo.frequencyLevel;
+        float minPitch = currentAudioInfo.minPitch;
+        float maxPitch = currentAudioInfo.maxPitch;
+        bool stopAudioSource = currentAudioInfo.stopAudioSource;
+
+        // play the sound based on the config
+        if (currentDisplayedCharacterCount % frequencyLevel == 0)
+        {
+            if (stopAudioSource)
+            {
+                audioSource.Stop();
+            }
+            AudioClip soundClip = null;
+            // create predictable audio from hashing
+            int hashCode = currentCharacter.GetHashCode();
+            // sound clip
+            int predictableIndex = hashCode % dialogueTypingSoundClips.Length;
+            soundClip = dialogueTypingSoundClips[predictableIndex];
+            // pitch
+            int minPitchInt = (int)(minPitch * 100);
+            int maxPitchInt = (int)(maxPitch * 100);
+            int pitchRangeInt = maxPitchInt - minPitchInt;
+            // cannot divide by 0, so if there is no range then skip the selection
+            if (pitchRangeInt != 0)
+            {
+                int predictablePitchInt = (hashCode % pitchRangeInt) + minPitchInt;
+                float predictablePitch = predictablePitchInt / 100f;
+                audioSource.pitch = predictablePitch;
+            }
+            else
+            {
+                audioSource.pitch = minPitch;
+            }
+
+            // play sound
+            audioSource.PlayOneShot(soundClip);
+        }
     }
 }

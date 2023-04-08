@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public class CurrentWaypointNullArgs : EventArgs { }
+public class CurrentWaypointNull1Args : EventArgs { }
+
 public class WaypointNavigator : MonoBehaviour
 {
     //CharacterNavigatorController controller;
@@ -12,6 +15,13 @@ public class WaypointNavigator : MonoBehaviour
     public event EventHandler CurrentWaypointNull;
     CurrentWaypointNullArgs arg;
 
+    //VRInteractionTutorialEvnt
+    public ShowDialogue showDialogue;
+    //private bool IsMomFinishedDialogue;
+    public event EventHandler CurrentWaypointNull1;
+    public bool Ischeck;
+
+
 
 
     private void Start()
@@ -20,6 +30,8 @@ public class WaypointNavigator : MonoBehaviour
         if (gameObjectName == "Mother")
         {
             controller = GetComponent<MomNPC_Nav>();
+            arg = new CurrentWaypointNullArgs();
+            //showDialogue.VRInteractionTutorialEvnt += new EventHandler(motherCharMove);
         }
         else if (gameObjectName == "SchoolBus")
         {
@@ -35,38 +47,42 @@ public class WaypointNavigator : MonoBehaviour
         }
 
         controller.SetDestination(currentWaypoint.GetPosition());
-        
-        arg = new CurrentWaypointNullArgs();
-        
-
     }
 
-    public class CurrentWaypointNullArgs : EventArgs
-    {
-
-    }
+    //private void motherCharMove(object sender, EventArgs e)
+    //{
+    //    IsMomFinishedDialogue = true;
+    //}
 
     private void Update()
     {
         if (controller.reachedDestination)
-        {
-            //CurrentWaypointNullArgs arg = new CurrentWaypointNullArgs();
-            if (currentWaypoint.nextWaypoint != null)
+        { 
+            if (currentWaypoint.nextWaypoint != null && gameObjectName != "Mother")
             {
                 currentWaypoint = currentWaypoint.nextWaypoint;
                 controller.SetDestination(currentWaypoint.GetPosition());
             }
             if (gameObjectName == "Mother")
             {
-                if (currentWaypoint.name == "Waypoint 4")
-                { 
-                    this.CurrentWaypointNull(this, arg);
+                if (currentWaypoint.nextWaypoint != null && currentWaypoint.name != "Waypoint 4")
+                {
+                    currentWaypoint = currentWaypoint.nextWaypoint;
+                    controller.SetDestination(currentWaypoint.GetPosition());
                 }
-            }
-
-
-          
-            
+                if (currentWaypoint.name == "Waypoint 4")
+                {
+                    this.CurrentWaypointNull(this, arg);
+                    currentWaypoint = currentWaypoint.nextWaypoint;
+                }
+                if (currentWaypoint.name == "Waypoint 9" && Ischeck == false)
+                {
+                    Ischeck = true;
+                    CurrentWaypointNull1Args arg1 = new CurrentWaypointNull1Args();
+                    this.CurrentWaypointNull1(this, arg1);
+                 
+                }
+            }           
         }
     }
 }

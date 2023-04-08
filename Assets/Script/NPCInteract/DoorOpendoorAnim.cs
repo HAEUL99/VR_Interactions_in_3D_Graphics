@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class DoorOpendoorAnim : MonoBehaviour
 {
-    public ErrandOkbtn errandOkbtn;
+    public NPCInteractable npcInteractable;
     private Animator animator;
 
     private void Start()
     {
-        errandOkbtn.DialogueOkEvnt += new EventHandler(StartAnim);
+        npcInteractable.FinishTutorialEvnt += new EventHandler(StartAnim);
         animator = gameObject.GetComponent<Animator>();
     }
 

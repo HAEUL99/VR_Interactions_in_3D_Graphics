@@ -22,7 +22,7 @@ public class CharacterNavigatorController : MonoBehaviour
     {
         movementSpeed = 1;
         rotationSpeed = 120;
-        stopDistance = 2f;
+        stopDistance = 0.5f;
     }
 
 

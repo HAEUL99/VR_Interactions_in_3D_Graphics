@@ -1,12 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 using System;
 using UnityEngine.InputSystem;
 
+
 public class BusTutorialStartEvntArgs : EventArgs
+{
+
+}
+
+public class VRInteractionTutorialEvntArgs : EventArgs
 {
 
 }
@@ -24,11 +28,22 @@ public class ShowDialogue : MonoBehaviour
     //vr interaction
     public InputAction leftThum, rightThum, leftPri, rightPri;
     public int VrInput;
+    public event EventHandler VRInteractionTutorialEvnt;
+    public bool Ischecked;
 
     //bus tutorial
     public event EventHandler BusTutorialStartEvnt;
     private bool Ischeck;
 
+    //sound
+    public int maxVisibleCharacters;
+    public DialogueAudioInfoSO currentAudioInfo;
+    private AudioSource audioSource;
+
+
+    //UI
+    public GameObject mapUi;
+    public GameObject errandListUi;
 
     private void Start()
     {
@@ -37,7 +52,9 @@ public class ShowDialogue : MonoBehaviour
         dialogueUi.SetActive(false);
         momnpc_Nav.StartDialogueEvnt += new EventHandler(StartDialogueEvntSender);
         dialogueText.text = string.Empty;
-
+        audioSource = this.gameObject.AddComponent<AudioSource>();
+        mapUi.SetActive(false);
+        errandListUi.SetActive(false);
     }
 
 
@@ -59,15 +76,21 @@ public class ShowDialogue : MonoBehaviour
         lines[12] = "When you're ready, talk to me again!";
         dialogueUi.SetActive(true);
         index = 0;
+        //index = 11;
         StartCoroutine(TypeLineFirst());
     }
 
     IEnumerator TypeLineFirst()
     {
         dialogueText.text = string.Empty;
+        maxVisibleCharacters = 0;
         foreach (char c in lines[index].ToCharArray())
         {
             dialogueText.text += c;
+
+            PlayDialogueSound(maxVisibleCharacters, dialogueText.text[maxVisibleCharacters]);
+            maxVisibleCharacters++;
+
             yield return new WaitForSeconds(textSpeed);
         }
         NextLine();
@@ -76,19 +99,68 @@ public class ShowDialogue : MonoBehaviour
     IEnumerator TypeLineAfterFirst()
     {
         IsSentenseFinished = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         dialogueText.text = string.Empty;
+        maxVisibleCharacters = 0;
         foreach (char c in lines[index].ToCharArray())
         {
             dialogueText.text += c;
+            
+            PlayDialogueSound(maxVisibleCharacters, dialogueText.text[maxVisibleCharacters]);
+            maxVisibleCharacters++;
             yield return new WaitForSeconds(textSpeed);
         }
         IsSentenseFinished = true;
  
     }
 
+    private void PlayDialogueSound(int currentDisplayedCharacterCount, char currentCharacter)
+    {
+        // set variables for the below based on our config
+        AudioClip[] dialogueTypingSoundClips = currentAudioInfo.dialogueTypingSoundClips;
+        int frequencyLevel = currentAudioInfo.frequencyLevel;
+        float minPitch = currentAudioInfo.minPitch;
+        float maxPitch = currentAudioInfo.maxPitch;
+        bool stopAudioSource = currentAudioInfo.stopAudioSource;
+
+        // play the sound based on the config
+        if (currentDisplayedCharacterCount % frequencyLevel == 0)
+        {
+            if (stopAudioSource)
+            {
+                audioSource.Stop();
+            }
+            AudioClip soundClip = null;
+            // create predictable audio from hashing
+            int hashCode = currentCharacter.GetHashCode();
+            // sound clip
+            int predictableIndex = hashCode % dialogueTypingSoundClips.Length;
+            soundClip = dialogueTypingSoundClips[predictableIndex];
+            // pitch
+            int minPitchInt = (int)(minPitch * 100);
+            int maxPitchInt = (int)(maxPitch * 100);
+            int pitchRangeInt = maxPitchInt - minPitchInt;
+            // cannot divide by 0, so if there is no range then skip the selection
+            if (pitchRangeInt != 0)
+            {
+                int predictablePitchInt = (hashCode % pitchRangeInt) + minPitchInt;
+                float predictablePitch = predictablePitchInt / 100f;
+                audioSource.pitch = predictablePitch;
+            }
+            else
+            {
+                audioSource.pitch = minPitch;
+            }
+
+            // play sound
+            audioSource.PlayOneShot(soundClip);
+        }
+    }
+
     public void NextLine()
     {
+        mapUi.SetActive(false);
+        errandListUi.SetActive(false);
         if (index < lines.Length - 1)
         {
             index++;
@@ -112,9 +184,15 @@ public class ShowDialogue : MonoBehaviour
     void VRInputCheck()
     {
         if (leftThum.triggered || Input.GetKeyDown(KeyCode.A))
+        {
             VrInput = 1;
+            mapUi.SetActive(true);
+        }
         if (rightThum.triggered || Input.GetKeyDown(KeyCode.B))
+        {
             VrInput = 2;
+            errandListUi.SetActive(true);
+        }
         if (leftPri.triggered || Input.GetKeyDown(KeyCode.C))
             VrInput = 3;
         if (rightPri.triggered || Input.GetKeyDown(KeyCode.D))
@@ -150,9 +228,7 @@ public class ShowDialogue : MonoBehaviour
             {
 
                 BusTutorialStartEvntArgs arg = new BusTutorialStartEvntArgs
-                {
-
-                };
+                { };
 
                 this.BusTutorialStartEvnt(this, arg);
                 Ischeck = true;
@@ -162,9 +238,25 @@ public class ShowDialogue : MonoBehaviour
         }
         else
         {
-        
+            if (index == 12 && Ischecked == false)
+            {
+
+                Ischecked = true;
+                VRInteractionTutorialEvntArgs arg = new VRInteractionTutorialEvntArgs
+                { };
+
+                this.VRInteractionTutorialEvnt(this, arg);
+
+
+
+            }
+            
             NextLine();
+
+
         }
+
+        
                   
             
     }
