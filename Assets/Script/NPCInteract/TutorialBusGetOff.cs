@@ -59,6 +59,7 @@ public class TutorialBusGetOff : MonoBehaviour
         loginPanel.SetActive(false);
         //player move
         player.transform.position = spawnPoint.transform.position;
+
         //bus move
         bus.SetActive(true);
         //char show
@@ -114,6 +115,7 @@ public class TutorialBusGetOff : MonoBehaviour
     public void MovetoHome()
     {
         player.transform.position = spawnPoint1.transform.position;
+        player.transform.rotation = Quaternion.Euler(0, 180, 0);
         showDialogue.NextLine();
  
     }

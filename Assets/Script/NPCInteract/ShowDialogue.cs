@@ -15,9 +15,11 @@ public class VRInteractionTutorialEvntArgs : EventArgs
 
 }
 
-public class VRInteractionMinimapEvntArgs : EventArgs { }
-public class VRInteractionListEvntArgs : EventArgs { }
-
+public class VRInteractionMinimapEvntArgs : EventArgs { public bool isBefore; }
+public class VRInteractionListEvntArgs : EventArgs { public bool isBefore1; }
+public class VRInteractionMoveEvntArgs : EventArgs { public bool isBefore2; }
+public class VRInteractionTurnEvntArgs : EventArgs { public bool isBefore3; }
+public class ComebacktoHomeAfterBusEvntArgs : EventArgs { }
 public class ShowDialogue : MonoBehaviour
 {
     public TextMeshProUGUI dialogueText;
@@ -32,13 +34,18 @@ public class ShowDialogue : MonoBehaviour
     public InputAction leftThum, rightThum, leftPri, rightPri;
     public int VrInput;
     public event EventHandler VRInteractionTutorialEvnt;
-    public bool Ischecked;
+    public bool Ischecked, Ischecked1;
+    public event EventHandler VRInteractionMoveEvnt; //leftThum
+    public event EventHandler VRInteractionTurnEvnt; //rightThum
     public event EventHandler VRInteractionMinimapEvnt; //rightPri
     public event EventHandler VRInteractionListEvnt; //leftPri
+    public event EventHandler ComebacktoHomeAfterBusEvnt;
+    public bool Isonce, Isonce1, Isonce2, Isonce3;
 
     //bus tutorial
     public event EventHandler BusTutorialStartEvnt;
     private bool Ischeck;
+
 
     //sound
     public int maxVisibleCharacters;
@@ -81,12 +88,12 @@ public class ShowDialogue : MonoBehaviour
         lines[7] = "Push the right a button";
         lines[8] = "We are going to try getting on and off the bus";
         lines[9] = "";
-        lines[10] = "Finally, there are things in the house that you can interact with.";
+        lines[10] = "There are things in the house that you can interact with.";
         lines[11] = "Give it a shot";
         lines[12] = "When you're ready, talk to me again!";
         dialogueUi.SetActive(true);
         index = 0;
-        //index = 11;
+        //index = 7;
         StartCoroutine(TypeLineFirst());
     }
 
@@ -185,7 +192,7 @@ public class ShowDialogue : MonoBehaviour
         if (IsSentenseFinished)
         {
             VRInputCheck();
-            VRInputAndIndexCheck();
+            //VRInputAndIndexCheck();
             
         }
         
@@ -193,31 +200,156 @@ public class ShowDialogue : MonoBehaviour
 
     void VRInputCheck()
     {
-        if (leftThum.triggered || Input.GetKeyDown(KeyCode.A))
+        if (index == 4)
         {
-            VrInput = 1;
-            //mapUi.SetActive(true);
+
+            if ((leftThum.triggered || Input.GetKeyDown(KeyCode.A)) && Isonce == false )
+            {
+                Isonce = true;
+                VrInput = 1;
+                StartCoroutine(ActionandNextDialogue(1));
+
+            }
+
         }
-        if (rightThum.triggered || Input.GetKeyDown(KeyCode.B))
+        else if (index == 5)
         {
-            VrInput = 2;
-            //errandListUi.SetActive(true);
+            if((rightThum.triggered || Input.GetKeyDown(KeyCode.B)) && Isonce1 == false)
+            {
+                Isonce1 = true;
+                VrInput = 2;
+                StartCoroutine(ActionandNextDialogue(2));
+
+            }
+
         }
-        if (leftPri.triggered || Input.GetKeyDown(KeyCode.C)) //list
+        else if (index == 6)
         {
-            VrInput = 3;
-            VRInteractionListEvntArgs arg = new VRInteractionListEvntArgs { };
-            this.VRInteractionListEvnt(this, arg);
-          
+            if((leftPri.triggered || Input.GetKeyDown(KeyCode.C)) && Isonce2 == false) //list
+            {
+                Isonce2 = true;
+                VrInput = 3;
+                StartCoroutine(ActionandNextDialogue(3));
+                //VRInteractionListEvntArgs arg = new VRInteractionListEvntArgs { };
+                //this.VRInteractionListEvnt(this, arg);
+
+            }
         }
-        if (rightPri.triggered || Input.GetKeyDown(KeyCode.D)) //minimap
+        else if (index == 7)
         {
-            VrInput = 4;
-            VRInteractionMinimapEvntArgs arg1 = new VRInteractionMinimapEvntArgs { };
-            this.VRInteractionMinimapEvnt(this, arg1);
+            if((rightPri.triggered || Input.GetKeyDown(KeyCode.D)) && Isonce3 == false) //minimap
+            {
+                Isonce3 = true;
+                VrInput = 4;
+                StartCoroutine(ActionandNextDialogue(4));
+                //VRInteractionMinimapEvntArgs arg1 = new VRInteractionMinimapEvntArgs { };
+                //this.VRInteractionMinimapEvnt(this, arg1);
+
+            }
+        }
+
+        else if (index == 9)
+        {
+            if (Ischeck == false)
+            {
+
+                BusTutorialStartEvntArgs arg = new BusTutorialStartEvntArgs
+                { };
+
+                this.BusTutorialStartEvnt(this, arg);
+                Ischeck = true;
+            }
+
+
+        }
+
+        else
+        {
+            if (index == 12 && Ischecked == false)
+            {
+
+                Ischecked = true;
+                VRInteractionTutorialEvntArgs arg = new VRInteractionTutorialEvntArgs
+                { };
+
+                this.VRInteractionTutorialEvnt(this, arg);
+
+
+
+            }
+            if (index == 10 && Ischecked1 == false)
+            {
+                Ischecked1 = true;
+                ComebacktoHomeAfterBusEvntArgs arg = new ComebacktoHomeAfterBusEvntArgs { };
+                this.ComebacktoHomeAfterBusEvnt(this, arg);
+
+
+            }
+
+            NextLine();
+
+        }
+
+    }
+
+    IEnumerator ActionandNextDialogue(int num)
+    {
+
+        switch (num)
+        {
+            case 1: //move
+                VRInteractionMoveEvntArgs arg = new VRInteractionMoveEvntArgs { };
+                arg.isBefore2 = true;
+                this.VRInteractionMoveEvnt(this, arg);     
+                break;
+            case 2:
+                VRInteractionTurnEvntArgs arg1= new VRInteractionTurnEvntArgs { };
+                arg1.isBefore3 = true;
+                this.VRInteractionTurnEvnt(this, arg1);  
+                break;
+            case 3:
+                VRInteractionListEvntArgs arg2 = new VRInteractionListEvntArgs { };
+                arg2.isBefore1 = true;
+                this.VRInteractionListEvnt(this, arg2);     
+                break;
+            case 4:
+                VRInteractionMinimapEvntArgs arg3 = new VRInteractionMinimapEvntArgs { };
+                arg3.isBefore = true;
+                this.VRInteractionMinimapEvnt(this, arg3);
+                break;
 
         }
             
+        yield return new WaitForSeconds(3.0f);
+
+        switch (num)
+        {
+            case 1: //move
+                VRInteractionMoveEvntArgs arg = new VRInteractionMoveEvntArgs { };
+                arg.isBefore2 = false;
+                this.VRInteractionMoveEvnt(this, arg);
+                break;
+            case 2:
+                VRInteractionTurnEvntArgs arg1 = new VRInteractionTurnEvntArgs { };
+                arg1.isBefore3 = false;
+                this.VRInteractionTurnEvnt(this, arg1);
+                break;
+            case 3:
+                VRInteractionListEvntArgs arg2 = new VRInteractionListEvntArgs { };
+                arg2.isBefore1 = false;
+                this.VRInteractionListEvnt(this, arg2);
+                break;
+            case 4:
+                VRInteractionMinimapEvntArgs arg3 = new VRInteractionMinimapEvntArgs { };
+                arg3.isBefore = false;
+                this.VRInteractionMinimapEvnt(this, arg3);
+                break;
+
+        }
+
+        NextLine();
+
+
     }
 
     void VRInputAndIndexCheck()

@@ -35,10 +35,7 @@ public class VehicleNPCTutorial_Nav : CharacterNavigatorController
     [SerializeField] private WheelCollider rearLeftWheelCollider;
     [SerializeField] private WheelCollider rearRightWheelCollider;
 
-    [SerializeField] private Transform frontLeftWheelTransform;
-    [SerializeField] private Transform frontRightWheeTransform;
-    [SerializeField] private Transform rearLeftWheelTransform;
-    [SerializeField] private Transform rearRightWheelTransform;
+    public Transform[] wheelTransform;
 
     private Rigidbody rb;
     private GameObject centerofMass;
@@ -76,8 +73,17 @@ public class VehicleNPCTutorial_Nav : CharacterNavigatorController
     {
 
         MoveBus();
+        //VehicleRotate();
 
 
+    }
+
+    void VehicleRotate()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            wheelTransform[i].Rotate(new Vector3(200f, 0f, 0f) * Time.deltaTime);
+        }
     }
 
     void IsPlayerRideFunc(object sender, EventArgs e)
@@ -94,9 +100,14 @@ public class VehicleNPCTutorial_Nav : CharacterNavigatorController
         //Speed Control
         if (!IsNearBusStop) // bus stop not arrived
         {
-            //Debug.Log($"yValue: {yValue}");
+     
             Movement(this.gameObject);
-
+            /*
+            for (int i = 0; i < 4; i++)
+            {
+                wheelTransform[i].Rotate(new Vector3(200f, 0f, 0f) * Time.deltaTime);
+            }
+            */
 
         }
         else // bus stop arrived
@@ -105,13 +116,25 @@ public class VehicleNPCTutorial_Nav : CharacterNavigatorController
             {
                 Stop();
                 movementSpeed = 0f;
+                /*
+                for (int i = 0; i < 4; i++)
+                {
+                    wheelTransform[i].Rotate(new Vector3(0.0f, 0.0f, 0.0f));
+                }
+                */
 
             }
             else
             {
                 stopSpeed += Time.deltaTime * stopSpeed;
                 Movement(this.gameObject, stopSpeed);
+                /*
+                for (int i = 0; i < 4; i++)
+                {
+                    wheelTransform[i].Rotate(new Vector3(200f, 0f, 0f) * Time.deltaTime);
+                }
 
+                */
             }
         }
 

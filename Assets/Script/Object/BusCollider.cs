@@ -42,7 +42,7 @@ public class BusCollider : MonoBehaviour
         //near bus stop
         if (other.gameObject.tag == "busstop")
         {
-
+       
             //버스 속도 줄이기 이벤트
             ArrivedNearBusStopEvntArgs arg = new ArrivedNearBusStopEvntArgs
             {

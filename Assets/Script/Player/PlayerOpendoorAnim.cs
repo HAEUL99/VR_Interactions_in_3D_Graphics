@@ -10,7 +10,7 @@ public class PlayerOpendoorAnim : MonoBehaviour
     private Animator animator;
     private bool IsEvntSend = false;
 
-    public CameraFade cameraFade;
+    //public CameraFade cameraFade;
 
     private void Start()
     {
@@ -30,8 +30,8 @@ public class PlayerOpendoorAnim : MonoBehaviour
     IEnumerator CompletedDialogue()
     {
         yield return new WaitForSeconds(0.8f);
-        cameraFade.m_IsFading = false;
-        cameraFade.FadeOut(1.2f, true);
+        //cameraFade.m_IsFading = false;
+        //cameraFade.FadeOut(1.2f, true);
         yield return new WaitForSeconds(1.1f);
         SceneManager.LoadScene("MapScene_VR_TEST");
 

@@ -37,7 +37,7 @@ public class ControlMapUI : MonoBehaviour
         EnterInitDesobj.SetActive(false);
         //NormalMapobj.SetActive(false);
         //InitMap.DOAnchorPos(Vector2.zero, 0.25f);
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 
 
     }

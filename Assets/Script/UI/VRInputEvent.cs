@@ -20,11 +20,13 @@ public class VRInputEvent : MonoBehaviour
         IsOpenMapUI = false;
         listUI.SetActive(false);
         mapUI.SetActive(false);
+
         
     }
 
     private void ControlListUI(object sender, EventArgs e)
     {
+
         if (IsOpenListUI == false) 
         {
             IsOpenListUI = true;

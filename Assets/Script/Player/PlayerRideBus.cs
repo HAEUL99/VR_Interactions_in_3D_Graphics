@@ -35,6 +35,8 @@ public class PlayerRideBus : MonoBehaviour
     public GameObject Mom2;
     public GameObject Mom2Text;
 
+    private bool isonce;
+
     enum BusStopName
     {
         Forest,
@@ -87,8 +89,13 @@ public class PlayerRideBus : MonoBehaviour
             //playerPlacement
             gameObject.transform.SetParent(bus, false);
             gameObject.transform.position = playerSeat.transform.position;
+            if (isonce == false)
+            {
+                isonce = true;
+                gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
+            }
 
-           
+
         }
 
         
@@ -119,19 +126,13 @@ public class PlayerRideBus : MonoBehaviour
 
     }
 
-    public void PlayerPlacement(GameObject bus)
-    {
-        //playerPlacement
-        GameObject playerSeat = bus.transform.Find("PlayerSeat").gameObject;
-        gameObject.transform.SetParent(gameObject.transform.parent, true);
-        gameObject.transform.position = playerSeat.transform.localPosition;
-    }
 
     private void CheckGetOff(object sender, EventArgs e)
     {
+
         if (IsTutorial && IsClicked)
         {
-            IsGetOff = true;
+            
             BusGetOffEvntArgs args = new BusGetOffEvntArgs
             {
                 //Destname = "marcus market"
@@ -140,6 +141,7 @@ public class PlayerRideBus : MonoBehaviour
             };
 
             this.BusGetOffEvnt(this, args);
+            IsGetOff = true;
 
         }
 
@@ -156,6 +158,7 @@ public class PlayerRideBus : MonoBehaviour
 
         gameObject.transform.SetParent(null);
         gameObject.transform.position = BusStopSpawnPos[currentBusStopnInt].position;
+        gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
         IsGetOff = false;
         IsClicked = false;
         Mom2.SetActive(false);

@@ -15,8 +15,7 @@ public class WaypointNavigator : MonoBehaviour
     public event EventHandler CurrentWaypointNull;
     CurrentWaypointNullArgs arg;
 
-    //VRInteractionTutorialEvnt
-    public ShowDialogue showDialogue;
+
     //private bool IsMomFinishedDialogue;
     public event EventHandler CurrentWaypointNull1;
     public bool Ischeck;
@@ -31,7 +30,7 @@ public class WaypointNavigator : MonoBehaviour
         {
             controller = GetComponent<MomNPC_Nav>();
             arg = new CurrentWaypointNullArgs();
-            //showDialogue.VRInteractionTutorialEvnt += new EventHandler(motherCharMove);
+            
         }
         else if (gameObjectName == "SchoolBus")
         {

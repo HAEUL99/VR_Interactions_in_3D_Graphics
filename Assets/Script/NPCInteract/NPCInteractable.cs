@@ -15,10 +15,58 @@ public class NPCInteractable : MonoBehaviour
     //Event sender
     public event EventHandler FinishTutorialEvnt;
     public GameObject playerCharacter;
+
+    //Event receiver
+    public ShowDialogue showdialogue;
+    public bool isWaiting;
     //sound
     public int maxVisibleCharacters;
     public DialogueAudioInfoSO currentAudioInfo;
     private AudioSource audioSource;
+    //ui
+    public GameObject InteractUI;
+    public bool isShowInteractUI;
+    public bool isInput;
+
+    private void Start()
+    {
+        InteractUI.SetActive(false);
+        showdialogue.VRInteractionTutorialEvnt += new EventHandler(ShowInteractUI);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Player" && isWaiting)
+        {
+            InteractUI.SetActive(true);
+            if (isShowInteractUI == false && isInput)
+            {
+                isShowInteractUI = true;
+                Interact();
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            isInput = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player" && isWaiting)
+        {
+            InteractUI.SetActive(false);
+        }
+    }
+
+    private void ShowInteractUI(object sender, EventArgs e)
+    {
+        isWaiting = true;
+    }
 
     public void Interact()
     {

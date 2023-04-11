@@ -18,6 +18,8 @@ public class CanvasControl : MonoBehaviour
         buttonAction.Enable();
         IsOpen = false;
         canvas = GameObject.Find("Canvas");
+
+
     }
 
     // Update is called once per frame
