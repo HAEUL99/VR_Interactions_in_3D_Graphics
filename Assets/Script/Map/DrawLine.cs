@@ -55,6 +55,9 @@ public class DrawLine : MonoBehaviour
     private int destNum;
     Transform destTransform = null;
 
+    //event receive
+    public ListofRout listofRout;
+
     //"Marcus Market", "New Life Church", "Rachel Bookkeeping"
     enum DestIndex
     {
@@ -95,9 +98,14 @@ public class DrawLine : MonoBehaviour
 
         nav.reDrawLineEvt += new EventHandler(Init);
         nav.reDrawLineEvt += new EventHandler(ComparedtwoWays);
-        nav.reDrawLineEvt += new EventHandler(DrawNavLine);
-        nav.reDrawLineEvt += new EventHandler(DrawDottedLine);
 
+
+        
+        nav.reDrawLineEvt += new EventHandler(CalculateDottedDistance);
+        nav.reDrawLineEvt += new EventHandler(CalculateLineDistance);
+
+        listofRout.ClickedRecomBtnEvnt += new EventHandler(DrawDottedLine);
+        listofRout.ClickedRecomBtnEvnt += new EventHandler(DrawNavLine);
 
     }
 
@@ -253,18 +261,9 @@ public class DrawLine : MonoBehaviour
 
     }
 
-    /*
-    public void SetDestination(object sender, EventArgs e)
+
+    public void CalculateDottedDistance(object sender, EventArgs e)
     {
-        //ClickCorrectDestEvntArgs args = e as ClickCorrectDestEvntArgs;
-        //destname = args.Destname;
-
-    }
-    */
-
-    public void DrawDottedLine(object sender, EventArgs e)
-    {
-
         disFromPlayertoPoint = 0.0f;
         //player -> near Point
         disFromPlayertoPoint = DottedLine.DottedLine.Instance.DrawDottedLineFromPlayer(playerPos, pointPos);
@@ -279,7 +278,7 @@ public class DrawLine : MonoBehaviour
                 int next = i + 1;
                 disFromPlayertoPoint +=
                     DottedLine.DottedLine.Instance.DrawDottedLineFromObj(points[i].position, points[next].position);
-        
+
             }
         }
         else
@@ -296,12 +295,119 @@ public class DrawLine : MonoBehaviour
         //bus stop -> dest
         //draw the line from busStop to destination
         disFromBusStoptoDest = DottedLine.DottedLine.Instance.DrawDottedLineFromObj(points[marcusIndex].position, destTransform.position);
+
+    }
+    public void DrawDottedLine(object sender, EventArgs e)
+    {
         DottedLine.DottedLine.Instance.Render();
     }
 
-    public void DrawNavLine(object sender, EventArgs e)
+    public void CalculateLineDistance(object sender, EventArgs e)
     {
         disFromBustoDest = 0.0f;
+
+        if (IsForward) //정방향
+        {
+            int num = 0;
+            //set the position
+            if (busStopIndexinIndex <= marcusIndex)
+            {
+                //lineRenderer.positionCount = marcusIndex - busStopIndexinIndex + 1;
+
+                for (int i = busStopIndexinIndex; i < marcusIndex + 1; i++)
+                {
+                    //lineRenderer.SetPosition(num++, points[i].position);
+                    int next = i + 1;
+                    if (i != marcusIndex)
+                    {
+                        disFromBustoDest += Vector3.Distance(points[i].position, points[next].position);
+                    }
+
+
+                }
+            }
+            else //지나쳤을 경우
+            {
+                //lineRenderer.positionCount = marcusIndex + (points.Length - busStopIndexinIndex) + 1;
+
+                for (int i = busStopIndexinIndex; i < points.Length; i++)
+                {
+                    //lineRenderer.SetPosition(num++, points[i].position);
+                    int next = i + 1;
+                    if (i != points.Length - 1)
+                    {
+                        disFromBustoDest += Vector3.Distance(points[i].position, points[next].position);
+                    }
+
+                }
+
+                for (int i = 0; i < marcusIndex + 1; i++)
+                {
+                    //lineRenderer.SetPosition(num++, points[i].position);
+                    int next = i + 1;
+                    if (i != marcusIndex)
+                    {
+                        disFromBustoDest += Vector3.Distance(points[i].position, points[next].position);
+                    }
+
+                }
+
+            }
+        }
+        else // 역방
+        {
+            int num = 0;
+            //set the position
+            if (busStopIndexinIndex <= marcusIndex)
+            {
+
+                //lineRenderer.positionCount = busStopIndexinIndex + 1 + (points.Length - marcusIndex);
+
+
+                int next = 0;
+                for (int i = busStopIndexinIndex; i > 0; i--)
+                {
+                    //lineRenderer.SetPosition(num++, points[i].position);
+                    next = i - 1;
+                    disFromBustoDest += Vector3.Distance(points[i].position, points[next].position);
+
+
+                }
+                //lineRenderer.SetPosition(num++, points[0].position);
+                disFromBustoDest += Vector3.Distance(points[0].position, points[points.Length - 1].position);
+                for (int i = points.Length - 1; i >= marcusIndex; i--)
+                {
+                    //lineRenderer.SetPosition(num++, points[i].position);
+                    next = i - 1;
+                    disFromBustoDest += Vector3.Distance(points[i].position, points[next].position);
+
+                }
+
+            }
+            else
+            {
+                //lineRenderer.positionCount = busStopIndexinIndex - marcusIndex + 1;
+
+                int next = 0;
+                for (int i = busStopIndexinIndex; i >= marcusIndex; i--)
+                {
+                    //lineRenderer.SetPosition(num++, points[i].position);
+                    next = i - 1;
+
+                    disFromBustoDest += Vector3.Distance(points[i].position, points[next].position);
+                }
+
+            }
+        }
+
+
+
+    }
+
+
+    public void DrawNavLine(object sender, EventArgs e)
+    {
+        //disFromBustoDest = 0.0f;
 
         lineRenderer.material.SetColor("_Color", Color.red);
         lineRenderer.startWidth = 5f;
@@ -319,12 +425,6 @@ public class DrawLine : MonoBehaviour
                 for (int i = busStopIndexinIndex; i < marcusIndex + 1; i++)
                 {
                     lineRenderer.SetPosition(num++, points[i].position);
-                    int next = i + 1;
-                    if (i != marcusIndex)
-                    {
-                        disFromBustoDest += Vector3.Distance(points[i].position, points[next].position);
-                    }
-
 
                 }
             }
@@ -335,22 +435,12 @@ public class DrawLine : MonoBehaviour
                 for (int i = busStopIndexinIndex; i < points.Length; i++)
                 {
                     lineRenderer.SetPosition(num++, points[i].position);
-                    int next = i + 1;
-                    if (i != points.Length - 1)
-                    {
-                        disFromBustoDest += Vector3.Distance(points[i].position, points[next].position);
-                    }
-
+                    
                 }
 
                 for (int i = 0; i < marcusIndex + 1; i++)
                 {
                     lineRenderer.SetPosition(num++, points[i].position);
-                    int next = i + 1;
-                    if (i != marcusIndex)
-                    {
-                        disFromBustoDest += Vector3.Distance(points[i].position, points[next].position);
-                    }
 
                 }
 
@@ -362,41 +452,25 @@ public class DrawLine : MonoBehaviour
             //set the position
             if (busStopIndexinIndex <= marcusIndex) 
             {
-
                 lineRenderer.positionCount = busStopIndexinIndex + 1 + (points.Length - marcusIndex);
-
-    
-                int next = 0;
                 for (int i = busStopIndexinIndex; i > 0; i--)
                 {
-                    lineRenderer.SetPosition(num++, points[i].position);
-                    next = i - 1;
-                    disFromBustoDest += Vector3.Distance(points[i].position, points[next].position);
-                    
-           
+                    lineRenderer.SetPosition(num++, points[i].position);       
                 }
                 lineRenderer.SetPosition(num++, points[0].position);
-                disFromBustoDest += Vector3.Distance(points[0].position, points[points.Length - 1].position);
+
                 for (int i = points.Length - 1; i >= marcusIndex; i--)
                 {
                     lineRenderer.SetPosition(num++, points[i].position);
-                    next = i - 1;
-                    disFromBustoDest += Vector3.Distance(points[i].position, points[next].position);
-           
                 }
  
             }
             else 
             {
                 lineRenderer.positionCount = busStopIndexinIndex - marcusIndex + 1;
-
-                int next = 0;
                 for (int i = busStopIndexinIndex; i >= marcusIndex; i--)
                 {
                     lineRenderer.SetPosition(num++, points[i].position);
-                    next = i - 1;
- 
-                    disFromBustoDest += Vector3.Distance(points[i].position, points[next].position);
                 }
 
             }
