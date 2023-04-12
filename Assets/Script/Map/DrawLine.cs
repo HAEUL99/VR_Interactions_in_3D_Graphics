@@ -71,6 +71,7 @@ public class DrawLine : MonoBehaviour
 
     void Start()
     {
+
         //point 
         points = new Transform[pointParent.childCount];
         repoints = new Transform[pointParent.childCount];
@@ -252,13 +253,14 @@ public class DrawLine : MonoBehaviour
 
     }
 
+    /*
     public void SetDestination(object sender, EventArgs e)
     {
-        ClickCorrectDestEvntArgs args = e as ClickCorrectDestEvntArgs;
-        destname = args.Destname;
+        //ClickCorrectDestEvntArgs args = e as ClickCorrectDestEvntArgs;
+        //destname = args.Destname;
 
     }
-
+    */
 
     public void DrawDottedLine(object sender, EventArgs e)
     {

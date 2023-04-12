@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FinishTutorialEvntArgs : EventArgs { }
 public class NPCInteractable : MonoBehaviour
@@ -28,10 +29,16 @@ public class NPCInteractable : MonoBehaviour
     public bool isShowInteractUI;
     public bool isInput;
 
+    //vr interaction
+    public InputAction rightSecond;
+
     private void Start()
     {
         InteractUI.SetActive(false);
         showdialogue.VRInteractionTutorialEvnt += new EventHandler(ShowInteractUI);
+
+        rightSecond.Enable();
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -49,7 +56,7 @@ public class NPCInteractable : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || rightSecond.triggered)
         {
             isInput = true;
         }

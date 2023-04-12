@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 
+
 public class ClickedRecBtnEvntArgs : EventArgs
 {
     public int idx;
@@ -62,9 +63,10 @@ public class ListofRout : MonoBehaviour
     private Button recommendedBtn;
     [SerializeField]
     private GameObject destNameObj;
-
-
-
+    [SerializeField]
+    private TMP_Text detailfirstDist_walk;
+    [SerializeField]
+    private TMP_Text firstDist_walk;
 
     public event EventHandler ClickedRecomBtnEvnt;
 
@@ -79,6 +81,7 @@ public class ListofRout : MonoBehaviour
         listofDest.ClickCorrectDestEvnt += new EventHandler(ShowUpUI);
         listofDest.ClickCorrectDestEvnt += new EventHandler(nav.FindNearPoint);
         listofDest.ClickCorrectDestEvnt += new EventHandler(ShowUpButton);
+        
         backBtn.onClick.AddListener(ClickedBackBtn);
 
       
@@ -120,7 +123,7 @@ public class ListofRout : MonoBehaviour
 
     void ShowUpButton(object sender, EventArgs e)
     {
-        if (drawLine.disFromBustoDest < 1f) 
+        if (drawLine.disFromBustoDest < 1f)
         {
             busImg.SetActive(false);
             arrowImg.SetActive(false);
@@ -132,22 +135,53 @@ public class ListofRout : MonoBehaviour
             detarrowImg.SetActive(false);
             detarrowImg1.SetActive(false);
         }
-
-
-        // 나누기 16해서 몫만
-        if ((drawLine.disFromPlayertoPoint / 16) == 0)
+        else
         {
-            firstDist.text = "1";
-            detailfirstDist.text = "1";
+            busImg.SetActive(true);
+            arrowImg.SetActive(true);
+            arrowImg1.SetActive(true);
+            walkingImg1.SetActive(true);
+            //detail
+            detailbusImg.SetActive(true);
+            detwalkingImg1.SetActive(true);
+            detarrowImg.SetActive(true);
+            detarrowImg1.SetActive(true);
+        }
+
+
+        
+
+        if (((int)drawLine.disFromBustoDest / 60) < 1)
+        {
+            if ((drawLine.disFromPlayertoPoint / 16) == 0)
+            {
+                firstDist_walk.text = "1";
+                detailfirstDist_walk.text = "1";
+            }
+            else
+            {
+                firstDist_walk.text = ((int)drawLine.disFromPlayertoPoint / 16).ToString();
+                detailfirstDist_walk.text = ((int)drawLine.disFromPlayertoPoint / 16).ToString();
+             
+            }
         }
         else
         {
-            firstDist.text = ((int)drawLine.disFromPlayertoPoint / 16).ToString();
-            detailfirstDist.text = ((int)drawLine.disFromPlayertoPoint / 16).ToString();
+            // 나누기 16해서 몫만
+            if ((drawLine.disFromPlayertoPoint / 16) == 0)
+            {
+                firstDist.text = "1";
+                detailfirstDist.text = "1";
+            }
+            else
+            {
+                firstDist.text = ((int)drawLine.disFromPlayertoPoint / 16).ToString();
+                detailfirstDist.text = ((int)drawLine.disFromPlayertoPoint / 16).ToString();
+            }
+
+            secondDist.text = ((int)drawLine.disFromBusStoptoDest / 16).ToString();
+            detailsecondDist.text = ((int)drawLine.disFromBusStoptoDest / 16).ToString();
         }
-            
-        secondDist.text = ((int)drawLine.disFromBusStoptoDest / 16).ToString();
-        detailsecondDist.text = ((int)drawLine.disFromBusStoptoDest / 16).ToString();
 
     }
 
@@ -156,13 +190,16 @@ public class ListofRout : MonoBehaviour
         Vector2 Pos1 = new Vector2(514, 0);
 
         TransRec.GetComponent<RectTransform>().DOAnchorPos(Pos1, 0.5f);
+
+        
+
         ClickedRecBtnEvntArgs arg = new ClickedRecBtnEvntArgs
         {
             idx = 0
         };
  
         ClickedRecomBtnEvnt(this, arg);
-        //nav.FindNearPoint();
+
 
     }
 
