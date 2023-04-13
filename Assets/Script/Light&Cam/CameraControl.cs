@@ -42,7 +42,7 @@ public class CameraControl : MonoBehaviour
     {
 
         camera.transform.position = positions[1].transform.position;
-        camera.transform.rotation = Quaternion.Euler(0, 60, 0);
+        camera.transform.rotation = Quaternion.Euler(0, 15, 0);
         //camera.transform.rotation = Quaternion.Euler(positions[1].transform.rotation.x, positions[1].transform.rotation.y, positions[1].transform.rotation.z);
     }
     

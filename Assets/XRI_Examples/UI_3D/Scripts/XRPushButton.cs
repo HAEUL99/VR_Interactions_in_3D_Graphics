@@ -196,10 +196,10 @@ namespace UnityEngine.XR.Content.Interaction
             foreach (var pressInfo in m_HoveringInteractors.Values)
             {
                 var interactorTransform = pressInfo.m_Interactor.GetAttachTransform(this);
-                var localOffset = transform.InverseTransformVector(interactorTransform.position - m_BaseButtonPosition);
+                var localOffset = transform.InverseTransformVector(interactorTransform.position - m_Button.position);
 
                 var withinButtonRegion = (Mathf.Abs(localOffset.x) < m_ButtonSize && Mathf.Abs(localOffset.z) < m_ButtonSize);
-                if (withinButtonRegion)
+                if (withinButtonRegion) 
                 {
                     if (!pressInfo.m_InPressRegion)
                     {

@@ -49,6 +49,7 @@ public class PlayerTutorialControl : MonoBehaviour
 
         IsOpenListUI = false;
         IsOpenMapUI = false;
+        
         listUI.SetActive(false);
         mapUI.SetActive(false);
 
@@ -57,7 +58,7 @@ public class PlayerTutorialControl : MonoBehaviour
     private void ControlMove(object sender, EventArgs e)
     {
         VRInteractionMoveEvntArgs arg = e as VRInteractionMoveEvntArgs;
-        Debug.Log($"arg.isBefore {arg.isBefore2}");
+
         if (!arg.isBefore2)
         {
            
