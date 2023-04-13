@@ -161,12 +161,10 @@ public class PlayerRideBus : MonoBehaviour
         gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
         IsGetOff = false;
         IsClicked = false;
-        Mom2.SetActive(false);
-
-
-
-
-
+        if (IsTutorial)
+        {
+            Mom2.SetActive(false);
+        }
 
     }
 }

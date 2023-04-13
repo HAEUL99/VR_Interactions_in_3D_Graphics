@@ -35,7 +35,7 @@ public class CameraControl : MonoBehaviour
     private void ChangeScene(object sender, EventArgs e)
     {
         camera.transform.position = positions[0].transform.position;
-        camera.transform.rotation = Quaternion.Euler(0, 180, 0);
+        camera.transform.rotation = Quaternion.Euler(0, -180, 0);
     }
 
     private void ChangeSecene1(object sender, EventArgs e)

@@ -29,7 +29,7 @@ public class DrawLine : MonoBehaviour
     public Transform[] busstops;
 
 
-    private Navigation nav;
+    public Navigation nav;
     private Transform player;
 
 
@@ -71,7 +71,7 @@ public class DrawLine : MonoBehaviour
     }
 
 
-
+    
     void Start()
     {
 
@@ -93,7 +93,7 @@ public class DrawLine : MonoBehaviour
         }
 
 
-        nav = FindObjectOfType<Navigation>();     
+        //nav = FindObjectOfType<Navigation>();     
         player = GameObject.FindWithTag("Player").GetComponent<Transform>();
 
         nav.reDrawLineEvt += new EventHandler(Init);
@@ -108,9 +108,14 @@ public class DrawLine : MonoBehaviour
         listofRout.ClickedRecomBtnEvnt += new EventHandler(DrawNavLine);
 
     }
+    
 
     public void Init(object sender, EventArgs e)
     {
+
+        
+
+
         reDrawLineEvtArgs args = e as reDrawLineEvtArgs;
         playerPos = player.position;
         pointIndex = args.nearIndex;

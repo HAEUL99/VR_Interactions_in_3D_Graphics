@@ -25,7 +25,7 @@ public class TutorialBusGetOff : MonoBehaviour
     public event EventHandler PlayerRideBus;
 
     //dialogue
-    public bool playerPushbtn;
+    private bool playerPushbtn;
     public TextMeshProUGUI dialogueText;
     private float textSpeed = 0.05f;
     public string[] lines;
@@ -44,8 +44,10 @@ public class TutorialBusGetOff : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //player = GameObject.FindWithTag("Player");
         playerPushbtn = player.GetComponent<PlayerRideBus>();
         showDialogue.BusTutorialStartEvnt += new EventHandler(BusTutorialStart);
+
         playerRidebus.BusGetOffEvnt += new EventHandler(CheckIfPlayerPushBtn);
         bus.SetActive(false);
    

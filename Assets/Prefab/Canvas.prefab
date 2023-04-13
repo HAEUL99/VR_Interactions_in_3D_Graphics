@@ -44,7 +44,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -2.108, y: 6.287, z: 1.423}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.271, y: 1.977}
+  m_AnchoredPosition: {x: -0.2709961, y: 1.9769897}
   m_SizeDelta: {x: 361, y: 612.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &356970490525222454
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &356970490525222452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,9 +124,13 @@ MonoBehaviour:
   EnterInitDesobj: {fileID: 8289245022175823146}
   Keyboardobj: {fileID: 8289245020878116550}
   NormalMapobj: {fileID: 0}
+  DetailRoutobj: {fileID: 0}
+  DetailRoutobjwalk: {fileID: 0}
   Init_InputField: {fileID: 8289245020559416361}
   time: {fileID: 8289245021152866503}
   wholeCam: {fileID: 0}
+  keyBoardPos: {x: 0, y: 0}
+  IsCheck: 0
 --- !u!1 &356970490682356609
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,9 +1217,21 @@ MonoBehaviour:
   TransRec: {fileID: 8289245020477665201}
   backBtn: {fileID: 8289245020871425528}
   firstDist: {fileID: 8289245020642542927}
+  secondDist: {fileID: 0}
+  detailfirstDist: {fileID: 0}
+  detailsecondDist: {fileID: 0}
   busImg: {fileID: 8289245020506487488}
   arrowImg: {fileID: 8289245021808667296}
+  arrowImg1: {fileID: 0}
+  walkingImg1: {fileID: 0}
+  detailbusImg: {fileID: 0}
+  detwalkingImg1: {fileID: 0}
+  detarrowImg: {fileID: 0}
+  detarrowImg1: {fileID: 0}
   recommendedBtn: {fileID: 8289245021554003111}
+  destNameObj: {fileID: 0}
+  detailfirstDist_walk: {fileID: 0}
+  firstDist_walk: {fileID: 0}
 --- !u!114 &8289245020477665204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3029,14 +3045,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listofRout: {fileID: 8289245020477665207}
+  listofDest: {fileID: 0}
   nav: {fileID: 8289245020477665204}
   wholeCam: {fileID: 0}
   selfCam: {fileID: 0}
+  IsExpand: 0
+  IsExpand1: 0
   buttons:
   - {fileID: 8289245021625764000}
   - {fileID: 8289245021751013187}
   - {fileID: 8289245021489592793}
-  destPos: {fileID: 0}
+  destPos:
+  - {fileID: 0}
+  drawLine: {fileID: 0}
+  firstDestTxt: {fileID: 0}
+  secondDestTxt: {fileID: 0}
+  ThirdDestTxt: {fileID: 0}
+  destNameTxt: {fileID: 0}
+  destname: 
+  DetailRout_walk: {fileID: 0}
+  firstDestTxt_walk: {fileID: 0}
+  destNameTxt_walk: {fileID: 0}
 --- !u!1 &8289245020745145119
 GameObject:
   m_ObjectHideFlags: 0
@@ -16814,6 +16843,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapKeyboard: {fileID: 8289245020878116538}
   controlMapUI: {fileID: 356970490525222442}
+  Keyboard: {fileID: 0}
+  destArrowImgs: []
   buttonParent: {fileID: 8289245020674623955}
   buttons:
   - {fileID: 8289245020823066230}
@@ -16821,6 +16852,7 @@ MonoBehaviour:
   - {fileID: 8289245021014508320}
   - {fileID: 8289245022464458079}
   - {fileID: 8289245021308493356}
+  alpha: 
 --- !u!1 &8289245022181335256
 GameObject:
   m_ObjectHideFlags: 0

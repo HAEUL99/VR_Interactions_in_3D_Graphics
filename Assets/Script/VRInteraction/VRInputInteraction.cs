@@ -15,6 +15,7 @@ public class VRInputInteraction : MonoBehaviour
 
     void Start()
     {
+        Debug.Log($"VRInputInteraction: {gameObject.name}");
         leftPri.Enable();
         rightPri.Enable();
         mapUI.SetActive(false);
@@ -24,7 +25,7 @@ public class VRInputInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (leftPri.triggered || Input.GetKeyDown(KeyCode.C))
+        if (rightPri.triggered || Input.GetKeyDown(KeyCode.D))
         {
             if (ismapOpen == false)
             {
@@ -38,7 +39,7 @@ public class VRInputInteraction : MonoBehaviour
             }
             
         }
-        if (leftPri.triggered || Input.GetKeyDown(KeyCode.D))
+        if (leftPri.triggered || Input.GetKeyDown(KeyCode.C))
         {
             if (islistOpen == false)
             {

@@ -17,12 +17,13 @@ public class ErrandListBtnEvnt : MonoBehaviour
     [SerializeField]
     private TMP_Text location;
     [SerializeField]
-    private Image image;
+    private GameObject image;
 
     private Sprite churchImg, deliveryImg, marketImg;
 
     private void Start()
     {
+        image.SetActive(false);
         churchBtn.onClick.AddListener(churchBtnClicked);
         deliveryBtn.onClick.AddListener(deliveryBtnClicked);
         marketBtn.onClick.AddListener(marketBtnClicked);
@@ -36,20 +37,23 @@ public class ErrandListBtnEvnt : MonoBehaviour
     {
         comment.text = "Light the church candles, water the plants!";
         location.text = $"Location: New Life Church";
-        image.sprite = churchImg;
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = churchImg;
     }
 
     void deliveryBtnClicked()
     {
-        comment.text = "Please load the boxes spilled on the floor onto the delivery truck.";
+        comment.text = "Load the boxes spilled on the floor onto the delivery truck.";
         location.text = $"Location: Rache Bookkeeping";
-        image.sprite = deliveryImg;
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = deliveryImg;
     }
 
     void marketBtnClicked()
     {
         comment.text = "Your brother wants the doll in the claw machine. Pick that doll for your brother";
         location.text = $"Location: Marcus Market";
-        image.sprite = marketImg;
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = marketImg;
     }
 }

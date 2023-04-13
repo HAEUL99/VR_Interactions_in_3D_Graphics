@@ -54,7 +54,6 @@ public class Navigation : MonoBehaviour
             i++;
         }
 
-
     }
 
     public void FindNearPoint(object sender, EventArgs e)

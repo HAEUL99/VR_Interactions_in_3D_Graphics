@@ -13,6 +13,7 @@ public class PlayerTutorialControl : MonoBehaviour
 
     private bool IsOpenListUI;
     private bool IsOpenMapUI;
+    private bool IsEnableUI;
 
     public enum PlayerStatus
     {
@@ -23,7 +24,7 @@ public class PlayerTutorialControl : MonoBehaviour
 
     }
 
-
+   
 
     public PlayerStatus playerStatus;
     ActionBasedContinuousMoveProvider continuousMoveProvider;
@@ -41,14 +42,18 @@ public class PlayerTutorialControl : MonoBehaviour
         showDialogue.VRInteractionListEvnt += new EventHandler(ControlListUI);
         showDialogue.VRInteractionMinimapEvnt += new EventHandler(ControlMapUI);
         showDialogue.BusTutorialStartEvnt += new EventHandler(EnableMoveandTurn);
+        showDialogue.BusTutorialStartEvnt += new EventHandler(EnableUI);
         showDialogue.ComebacktoHomeAfterBusEvnt += new EventHandler(DisableMoveandTurn);
+        showDialogue.ComebacktoHomeAfterBusEvnt += new EventHandler(DisableUI);
         showDialogue.VRInteractionTutorialEvnt += new EventHandler(EnableMoveandTurn);
+        showDialogue.VRInteractionTutorialEvnt += new EventHandler(EnableUI);
 
         continuousMoveProvider.enabled = false;
         continuousTurnProvider.enabled = false;
 
         IsOpenListUI = false;
         IsOpenMapUI = false;
+        IsEnableUI = false;
         
         listUI.SetActive(false);
         mapUI.SetActive(false);
@@ -128,4 +133,39 @@ public class PlayerTutorialControl : MonoBehaviour
         continuousMoveProvider.enabled = false;
         continuousTurnProvider.enabled = false;
     }
+
+    private void EnableUI(object sender, EventArgs e)
+    {
+        IsEnableUI = true;
+    }
+
+    private void DisableUI(object sender, EventArgs e)
+    {
+        IsEnableUI = false;
+    }
+
+    public void Update()
+    {
+        if (IsEnableUI)
+        {
+            if (showDialogue.leftPri.triggered || Input.GetKeyDown(KeyCode.C) )
+            {
+                IsOpenListUI = !IsOpenListUI;
+                listUI.SetActive(IsOpenListUI);
+            }
+            if (showDialogue.rightPri.triggered || Input.GetKeyDown(KeyCode.D))
+            {
+                IsOpenMapUI = !IsOpenMapUI;
+                mapUI.SetActive(IsOpenMapUI);
+
+            }
+        }
+
+
+
+         
+    }
+
+
+
 }

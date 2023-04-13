@@ -51,6 +51,7 @@ namespace DottedLine
             var gameObject = new GameObject();
             gameObject.transform.localScale = Vector3.one * Size;
             gameObject.transform.parent = transform;
+            gameObject.layer = 7;
 
             var sr = gameObject.AddComponent<SpriteRenderer>();
             sr.sprite = Dot;

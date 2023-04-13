@@ -123,7 +123,8 @@ public class ListofRout : MonoBehaviour
 
     void ShowUpButton(object sender, EventArgs e)
     {
-        if (drawLine.disFromBustoDest < 1f)
+
+        if (((int)drawLine.disFromBustoDest / 60) < 1)
         {
             busImg.SetActive(false);
             arrowImg.SetActive(false);

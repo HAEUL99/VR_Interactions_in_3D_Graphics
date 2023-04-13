@@ -47,7 +47,7 @@ public class ListofDest : MonoBehaviour
     private Button backButton;
     public string alpha;
 
-    private void Start()
+    private void Awake()
     {
         mapKeyboard.EnterDestEvnt += new EventHandler(SearchingName);
         controlMapUI.ShowEnterInitEvnt += new EventHandler(Init);

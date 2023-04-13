@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/LoginScene_VR_sub.unity
     guid: 809151516e9f57d47aa5158debe7725b
   - enabled: 1
-    path: Assets/Scenes/LoginScene_VR.unity
+    path: Assets/Scenes/LoginScene_VR_SUB.unity
     guid: ba33118c3c9de4de48d1a25a1ebeb33b
   - enabled: 1
     path: Assets/Scenes/MapScene_VR.unity

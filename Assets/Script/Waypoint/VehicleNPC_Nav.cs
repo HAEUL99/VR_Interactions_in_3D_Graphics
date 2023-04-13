@@ -14,7 +14,7 @@ public class VehicleNPC_Nav : CharacterNavigatorController
     private Animator frontdoorLeft;
 
     private bool IsNearBusStop = false;
-    private float stopSpeed = 0.5f;
+    private float stopSpeed = 1f;
 
     //vehicle wheel Object
     private float horizontalInput;
@@ -50,9 +50,9 @@ public class VehicleNPC_Nav : CharacterNavigatorController
     public override void Init()
     {
 
-        movementSpeed = 4;
+        movementSpeed = 7;
         rotationSpeed = 120;
-        stopDistance = 2f;
+        stopDistance = 0.5f;
 
 
         //bus stop at each station

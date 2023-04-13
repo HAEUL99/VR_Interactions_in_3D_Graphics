@@ -20,9 +20,10 @@ public class ControlMapUI : MonoBehaviour
     public event EventHandler ShowEnterInitEvnt;
     public GameObject wholeCam;
     public  Vector2 keyBoardPos;
+    public bool IsCheck;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
 
         InitMap = InitMapobj.GetComponent<RectTransform>();
@@ -45,7 +46,9 @@ public class ControlMapUI : MonoBehaviour
     {
         if (Init_InputField.isFocused)
         {
+            //IsCheck = true;
             EnterInit_InputField();
+            
         }
 
         TimeSetting();
@@ -57,15 +60,16 @@ public class ControlMapUI : MonoBehaviour
         Vector2 Pos1 = new Vector2(0, -610);
         DetailRout.DOAnchorPos(Pos1, 0.2f);
         DetailRoutwalk.DOAnchorPos(Pos1, 0.2f);
-        //InitMapobj.SetActive(false);
+
         EnterInitDesobj.SetActive(true);
 
-        ShowEnterInitEvntArgs arg = new ShowEnterInitEvntArgs
+        
+        ShowEnterInitEvntArgs arg1 = new ShowEnterInitEvntArgs
         {
             
         };
-        this.ShowEnterInitEvnt(this, arg);
-
+        this.ShowEnterInitEvnt(this, arg1);
+        
         Keyboardobj.SetActive(true);
         Vector2 Pos = new Vector2(0, -208);
         Keyboard.DOAnchorPos(Pos, 0.5f); 

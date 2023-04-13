@@ -92,8 +92,8 @@ public class ShowDialogue : MonoBehaviour
         lines[11] = "Give it a shot";
         lines[12] = "When you're ready, talk to me again!";
         dialogueUi.SetActive(true);
-        //index = 0;
-        index = 11;
+        index = 0;
+        //index = 11;
         StartCoroutine(TypeLineFirst());
     }
 
@@ -192,7 +192,7 @@ public class ShowDialogue : MonoBehaviour
         if (IsSentenseFinished)
         {
             VRInputCheck();
-            //VRInputAndIndexCheck();
+
             
         }
         
@@ -258,6 +258,8 @@ public class ShowDialogue : MonoBehaviour
 
                 this.BusTutorialStartEvnt(this, arg);
                 Ischeck = true;
+
+
             }
 
 
@@ -352,80 +354,7 @@ public class ShowDialogue : MonoBehaviour
 
     }
 
-    void VRInputAndIndexCheck()
-    {
-        if (index == 4)
-        {
-            if (VrInput == 1)
-            {
-         
-                NextLine();
-            }
-        }
-        else if (index == 5)
-        {
-            if (VrInput == 2)
-            {
-          
-                NextLine();
-            }
-        }
-        else if (index == 6)
-        {
-            if (VrInput == 3) 
-            {
-
-                NextLine();
-            }
-                
-        }
-        else if (index == 7)
-        {
-            if (VrInput == 4)
-            {
-
-                NextLine();
-            }
-        }
-        //bus getting on off tutorial
-        else if (index == 9)
-        {
-            if (Ischeck == false)
-            {
-
-                BusTutorialStartEvntArgs arg = new BusTutorialStartEvntArgs
-                { };
-
-                this.BusTutorialStartEvnt(this, arg);
-                Ischeck = true;
-            }
-
-
-        }
-        else
-        {
-            if (index == 12 && Ischecked == false)
-            {
-
-                Ischecked = true;
-                VRInteractionTutorialEvntArgs arg = new VRInteractionTutorialEvntArgs
-                { };
-
-                this.VRInteractionTutorialEvnt(this, arg);
-
-
-
-            }
-            
-            NextLine();
-
-
-        }
-
-        
-                  
-            
-    }
+    
 
 
 
