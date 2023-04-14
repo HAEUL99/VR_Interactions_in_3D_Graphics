@@ -80,12 +80,12 @@ public class ShowDialogue : MonoBehaviour
         lines[0] = PlayerNick.Nickname + ", Welcome to the vr world!" ;
         lines[1] = "You can take a bus from here to other places,";
         lines[2] = "and do vr interaction with a few objects";
-        lines[3] = "I'll let you know how to operate the controller now";
+        lines[3] = "I'll let you know how to control the controller now";
         //Check if the player try or not 
-        lines[4] = "You can rotate your view with the left thumbstick. Try";
-        lines[5] = "you can move with the right thumbstick.";
-        lines[6] = "And push the left x button ";
-        lines[7] = "Push the right a button";
+        lines[4] = "You can move with the left thumbstick. Try";
+        lines[5] = "you can turn with the right thumbstick.";
+        lines[6] = "And push the left x button. It is a todo list";
+        lines[7] = "Push the right a button. It is a minimap.";
         lines[8] = "We are going to try getting on and off the bus";
         lines[9] = "";
         lines[10] = "There are things in the house that you can interact with.";
