@@ -13,8 +13,8 @@ public class VehicleNPC_Nav : CharacterNavigatorController
     private Animator frontdoorRight;
     private Animator frontdoorLeft;
 
-    private bool IsNearBusStop = false;
-    private float stopSpeed = 1f;
+    public bool IsNearBusStop = false;
+    public float stopSpeed = 1f;
 
     //vehicle wheel Object
     private float horizontalInput;
@@ -87,7 +87,7 @@ public class VehicleNPC_Nav : CharacterNavigatorController
     void MoveBus()
     {
         //Speed Control
-        if (!IsNearBusStop) // bus stop not arrived
+        if (IsNearBusStop == false) // bus stop not arrived
         {
             //Debug.Log($"yValue: {yValue}");
             Movement(this.gameObject);
@@ -100,12 +100,14 @@ public class VehicleNPC_Nav : CharacterNavigatorController
             {
                 StartCoroutine(Stop());
                 movementSpeed = 0f;
+                Debug.Log($"bus name1: {gameObject.name}");
 
             }
             else
             {
                 stopSpeed += Time.deltaTime * stopSpeed;
                 Movement(this.gameObject, stopSpeed);
+                Debug.Log($"bus name2: {gameObject.name}");
 
             }
         }
@@ -152,6 +154,7 @@ public class VehicleNPC_Nav : CharacterNavigatorController
     void Slowdown(object sender, EventArgs e)
     {
         IsNearBusStop = true;
+        Debug.Log($"bus name: {IsNearBusStop}");
     }
 
 
@@ -166,8 +169,8 @@ public class VehicleNPC_Nav : CharacterNavigatorController
             yield return new WaitForSeconds(1f);
 
         }
-        stopSpeed = 0.5f;
-        movementSpeed = 4f;
+        stopSpeed = 1f;
+        movementSpeed = 7f;
         IsNearBusStop = false;
         frontdoorRight.SetBool("IsOpen", false);
         frontdoorLeft.SetBool("IsOpen", false);

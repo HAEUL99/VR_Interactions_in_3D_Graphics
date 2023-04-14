@@ -12,7 +12,7 @@ public class VehicleNPCTutorial_Nav : CharacterNavigatorController
     private Animator frontdoorRight;
     private Animator frontdoorLeft;
 
-    private bool IsNearBusStop = false;
+    public bool IsNearBusStop = false;
     private float stopSpeed = 0.5f;
 
     //vehicle wheel Object
