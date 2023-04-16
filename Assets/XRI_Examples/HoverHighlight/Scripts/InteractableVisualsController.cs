@@ -144,6 +144,49 @@ namespace UnityEngine.XR.Content.Rendering
             m_StartingWidth = m_OutlineHighlight.outlineScale;
         }
 
+        public void Init()
+        {
+            // Find the grab interactable
+            m_Interactable = GetComponentInParent<XRBaseInteractable>();
+
+            // Hook up to events
+            if (m_Interactable is IXRHoverInteractable hoverInteractable)
+            {
+                hoverInteractable.hoverEntered.AddListener(OnHoverEntered);
+                hoverInteractable.hoverExited.AddListener(OnHoverExited);
+            }
+
+            if (m_Interactable is IXRSelectInteractable selectInteractable)
+            {
+                selectInteractable.selectEntered.AddListener(OnSelectEntered);
+                selectInteractable.selectExited.AddListener(OnSelectExited);
+            }
+
+            if (m_Interactable is IXRActivateInteractable activateInteractable)
+            {
+                activateInteractable.activated.AddListener(OnActivated);
+                activateInteractable.deactivated.AddListener(OnDeactivated);
+            }
+
+            // Cache materials for highlighting
+            m_HighlightController.rendererSource = m_Interactable.transform;
+
+            // Tell the highlight objects to get renderers starting at the grab interactable down
+            if (m_MaterialHighlight != null)
+            {
+                m_HighlightController.RegisterCacheUser(m_MaterialHighlight);
+                m_PulseMaterial = m_MaterialHighlight.highlightMaterial;
+
+                if (m_PulseMaterial != null)
+                    m_StartingAlpha = m_PulseMaterial.GetFloat("_PulseMinAlpha");
+            }
+            if (m_OutlineHighlight != null)
+                m_HighlightController.RegisterCacheUser(m_OutlineHighlight);
+
+            m_HighlightController.Initialize();
+            m_StartingWidth = m_OutlineHighlight.outlineScale;
+        }
+
         /// <summary>
         /// See <see cref="MonoBehaviour"/>.
         /// </summary>

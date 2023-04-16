@@ -92,8 +92,8 @@ public class ShowDialogue : MonoBehaviour
         lines[11] = "Give it a shot";
         lines[12] = "When you're ready, talk to me again!";
         dialogueUi.SetActive(true);
-        index = 0;
-        //index = 11;
+        //index = 0;
+        index = 11;
         StartCoroutine(TypeLineFirst());
     }
 

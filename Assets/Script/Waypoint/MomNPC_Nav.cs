@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public class WaitingPlayerFinishTutorialArgs : EventArgs { }
 public class MomNPC_Nav : CharacterNavigatorController
 {
     public KeyBoardInput keyBoardinput;
@@ -11,6 +12,7 @@ public class MomNPC_Nav : CharacterNavigatorController
     private bool IsEvntSend = false;
 
     public event EventHandler StartDialogueEvnt;
+    public event EventHandler WaitingPlayerFinishTutorialEvnt;
     StartDialogueArgs arg;
 
     public ShowDialogue showDialogue;
@@ -69,6 +71,12 @@ public class MomNPC_Nav : CharacterNavigatorController
         animator.SetBool("IsWalk", false);
         IsCheck = false;
         Mom.transform.Rotate(0.0f, 180.0f, 0.0f);
+        WaitingPlayerFinishTutorialArgs arg = new WaitingPlayerFinishTutorialArgs { };
+        this.WaitingPlayerFinishTutorialEvnt(this, arg);
+
+
+
+
     }
 
     public void Update()

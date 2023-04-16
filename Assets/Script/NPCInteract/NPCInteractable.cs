@@ -9,6 +9,7 @@ public class FinishTutorialEvntArgs : EventArgs { }
 public class NPCInteractable : MonoBehaviour
 {
     public GameObject dialogueImg;
+    public GameObject dialogueObj;
     public TextMeshProUGUI dialogueText;
     private int index;
     public string[] lines;
@@ -38,12 +39,14 @@ public class NPCInteractable : MonoBehaviour
         showdialogue.VRInteractionTutorialEvnt += new EventHandler(ShowInteractUI);
 
         rightSecond.Enable();
+        gameObject.SetActive(false);
 
     }
 
+    
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player" && isWaiting)
+        if (other.gameObject.tag == "Player")
         {
             InteractUI.SetActive(true);
             if (isShowInteractUI == false && isInput)
@@ -53,23 +56,31 @@ public class NPCInteractable : MonoBehaviour
             }
         }
     }
-
+    
     private void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.E) || rightSecond.triggered)
         {
             isInput = true;
         }
+        /*
+        if (isInput == true)
+        {
+            Interact();
+        }
+        */
     }
 
+    
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player" && isWaiting)
+        if (other.gameObject.tag == "Player")
         {
             InteractUI.SetActive(false);
         }
     }
-
+    
     private void ShowInteractUI(object sender, EventArgs e)
     {
         isWaiting = true;
@@ -78,9 +89,15 @@ public class NPCInteractable : MonoBehaviour
     public void Interact()
     {
         dialogueImg.SetActive(true);
+        dialogueObj.SetActive(true);
         dialogueText.text = string.Empty;
         audioSource = this.gameObject.AddComponent<AudioSource>();
         StartCoroutine(ShowtheDialogue());
+
+        GetComponent<Animator>().SetBool("IsWaiting", false);
+        GetComponent<Animator>().SetBool("IsTalk", true);
+
+
 
 
     }

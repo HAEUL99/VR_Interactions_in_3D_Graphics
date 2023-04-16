@@ -20,13 +20,15 @@ public class WaypointNavigator : MonoBehaviour
     public event EventHandler CurrentWaypointNull1;
     public bool Ischeck;
 
+    public GameObject Mom_before;
+    public GameObject Mom_after;
 
 
 
     private void Start()
     {
         gameObjectName = gameObject.name;
-        if (gameObjectName == "Mother")
+        if (gameObjectName == "Mother" || gameObjectName == "Mother_after")
         {
             controller = GetComponent<MomNPC_Nav>();
             arg = new CurrentWaypointNullArgs();
@@ -79,7 +81,13 @@ public class WaypointNavigator : MonoBehaviour
                     Ischeck = true;
                     CurrentWaypointNull1Args arg1 = new CurrentWaypointNull1Args();
                     this.CurrentWaypointNull1(this, arg1);
-                 
+
+
+                    Mom_after.SetActive(true);
+                    Mom_after.transform.position = Mom_before.transform.position;
+                    Mom_after.transform.rotation = Mom_before.transform.rotation;
+
+                    Mom_before.SetActive(false);
                 }
             }           
         }

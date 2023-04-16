@@ -45,6 +45,15 @@ namespace UnityEngine.XR.Content.Rendering
             m_HighlightMaterial = m_InstanceHighlightMaterial;
         }
 
+        public void Init()
+        {
+            if (m_HighlightMaterial == null)
+                return;
+
+            m_InstanceHighlightMaterial = Instantiate(m_HighlightMaterial);
+            m_HighlightMaterial = m_InstanceHighlightMaterial;
+        }
+
         /// <summary>
         /// See <see cref="MonoBehaviour"/>.
         /// </summary>
