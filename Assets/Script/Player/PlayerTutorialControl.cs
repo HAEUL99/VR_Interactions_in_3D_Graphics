@@ -24,7 +24,7 @@ public class PlayerTutorialControl : MonoBehaviour
 
     }
 
-   
+    public GameObject original_pos;
 
     public PlayerStatus playerStatus;
     ActionBasedContinuousMoveProvider continuousMoveProvider;
@@ -68,6 +68,7 @@ public class PlayerTutorialControl : MonoBehaviour
         {
            
             continuousMoveProvider.enabled = false;
+            gameObject.transform.position = original_pos.transform.position;
         }
         else
         {
@@ -83,6 +84,7 @@ public class PlayerTutorialControl : MonoBehaviour
         if (!arg.isBefore3)
         {
             continuousTurnProvider.enabled = false;
+            gameObject.transform.rotation = original_pos.transform.rotation;
         }
         else
         {

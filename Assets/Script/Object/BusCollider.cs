@@ -6,11 +6,14 @@ using UnityEngine;
 public class ArrivedNearBusStopEvntArgs : EventArgs
 {
     public string currentBusStopName;
+    public int busdirection; // 0: forward, 1: back
+    public GameObject bus;
 }
 
 public class PlayerEnterBusEvntArgs : EventArgs
 {
     public GameObject bus;
+    
 }
 
 
@@ -21,8 +24,20 @@ public class BusCollider : MonoBehaviour
     //event sender
     public event EventHandler ArrivedNearBusStopEvnt;
     public event EventHandler PlayerEnterBusEvnt;
+    public int Busdirection;
 
+    void Start()
+    {
+        if (transform.parent.CompareTag("busforward"))
+        {
+            Busdirection = 0;
+        }
+        if (transform.parent.CompareTag("busback"))
+        {
+            Busdirection = 1;
+        }
 
+    }
     private void OnTriggerEnter(Collider other)
     {
         //player
@@ -31,6 +46,7 @@ public class BusCollider : MonoBehaviour
             PlayerEnterBusEvntArgs arg = new PlayerEnterBusEvntArgs
             {
                 bus = this.gameObject
+                
             };
             this.PlayerEnterBusEvnt(this, arg);
 
@@ -42,15 +58,19 @@ public class BusCollider : MonoBehaviour
         //near bus stop
         if (other.gameObject.tag == "busstop")
         {
-            Debug.Log($"bus: {gameObject.name}, busstop: {other.gameObject.name}");
+
             //버스 속도 줄이기 이벤트
             ArrivedNearBusStopEvntArgs arg = new ArrivedNearBusStopEvntArgs
             {
-                currentBusStopName = other.name
+                currentBusStopName = other.name,
+                busdirection = Busdirection,
+                bus = this.gameObject
             };
 
             this.ArrivedNearBusStopEvnt(this, arg);
         }
+
+
     }
 
    

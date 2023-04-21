@@ -73,7 +73,6 @@ public class VehicleNPCTutorial_Nav : CharacterNavigatorController
     {
 
         MoveBus();
-        //VehicleRotate();
 
 
     }
@@ -100,15 +99,7 @@ public class VehicleNPCTutorial_Nav : CharacterNavigatorController
         //Speed Control
         if (!IsNearBusStop) // bus stop not arrived
         {
-     
             Movement(this.gameObject);
-            /*
-            for (int i = 0; i < 4; i++)
-            {
-                wheelTransform[i].Rotate(new Vector3(200f, 0f, 0f) * Time.deltaTime);
-            }
-            */
-
         }
         else // bus stop arrived
         {
@@ -116,25 +107,11 @@ public class VehicleNPCTutorial_Nav : CharacterNavigatorController
             {
                 Stop();
                 movementSpeed = 0f;
-                /*
-                for (int i = 0; i < 4; i++)
-                {
-                    wheelTransform[i].Rotate(new Vector3(0.0f, 0.0f, 0.0f));
-                }
-                */
-
             }
             else
             {
                 stopSpeed += Time.deltaTime * stopSpeed;
                 Movement(this.gameObject, stopSpeed);
-                /*
-                for (int i = 0; i < 4; i++)
-                {
-                    wheelTransform[i].Rotate(new Vector3(200f, 0f, 0f) * Time.deltaTime);
-                }
-
-                */
             }
         }
 
@@ -160,9 +137,6 @@ public class VehicleNPCTutorial_Nav : CharacterNavigatorController
 
                 //horizontalInput
                 childobject.transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-                //verticalInput
-                //verticalInput = movementSpeed * Time.deltaTime;
                 childobject.transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
 
             }
@@ -187,19 +161,6 @@ public class VehicleNPCTutorial_Nav : CharacterNavigatorController
     {
         frontdoorRight.SetBool("IsOpen", true);
         frontdoorLeft.SetBool("IsOpen", true);
-
-        //for (int i = 0; i < 10; i++)
-        //{
-
-        //    yield return new WaitForSeconds(1f);
-
-        //}
-        //stopSpeed = 0.5f;
-        //movementSpeed = 4f;
-        //IsNearBusStop = false;
-        //frontdoorRight.SetBool("IsOpen", false);
-        //frontdoorLeft.SetBool("IsOpen", false);
-
     }
 
 

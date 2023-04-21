@@ -100,14 +100,14 @@ public class VehicleNPC_Nav : CharacterNavigatorController
             {
                 StartCoroutine(Stop());
                 movementSpeed = 0f;
-                Debug.Log($"bus name1: {gameObject.name}");
+                
 
             }
             else
             {
                 stopSpeed += Time.deltaTime * stopSpeed;
                 Movement(this.gameObject, stopSpeed);
-                Debug.Log($"bus name2: {gameObject.name}");
+                
 
             }
         }
@@ -154,7 +154,7 @@ public class VehicleNPC_Nav : CharacterNavigatorController
     void Slowdown(object sender, EventArgs e)
     {
         IsNearBusStop = true;
-        Debug.Log($"bus name: {IsNearBusStop}");
+        
     }
 
 

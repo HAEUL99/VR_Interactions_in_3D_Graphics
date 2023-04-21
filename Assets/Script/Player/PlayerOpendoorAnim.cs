@@ -36,16 +36,7 @@ public class PlayerOpendoorAnim : MonoBehaviour
         SceneManager.LoadScene("MapScene_VR");
 
     }
-    /*
-    private void Update()
-    {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("OpenDoor") &&
-   animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && IsEvntSend == false)
-        {
-            SceneManager.LoadScene("GameScene");
-        }
-    }
-    */
+ 
 
 
 }

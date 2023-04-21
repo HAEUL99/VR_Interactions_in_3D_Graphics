@@ -5,16 +5,8 @@ using System;
 using UnityEngine.InputSystem;
 
 
-public class BusTutorialStartEvntArgs : EventArgs
-{
-
-}
-
-public class VRInteractionTutorialEvntArgs : EventArgs
-{
-
-}
-
+public class BusTutorialStartEvntArgs : EventArgs { }
+public class VRInteractionTutorialEvntArgs : EventArgs { }
 public class VRInteractionMinimapEvntArgs : EventArgs { public bool isBefore; }
 public class VRInteractionListEvntArgs : EventArgs { public bool isBefore1; }
 public class VRInteractionMoveEvntArgs : EventArgs { public bool isBefore2; }
@@ -46,15 +38,12 @@ public class ShowDialogue : MonoBehaviour
     public event EventHandler BusTutorialStartEvnt;
     private bool Ischeck;
 
-
     //sound
     public int maxVisibleCharacters;
     public DialogueAudioInfoSO currentAudioInfo;
     private AudioSource audioSource;
 
-
-    //UI
-
+    
 
     private void Start()
     {
@@ -93,7 +82,7 @@ public class ShowDialogue : MonoBehaviour
         lines[12] = "When you're ready, talk to me again!";
         dialogueUi.SetActive(true);
         //index = 0;
-        index = 11;
+        index = 10;
         StartCoroutine(TypeLineFirst());
     }
 

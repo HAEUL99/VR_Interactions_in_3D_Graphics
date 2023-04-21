@@ -12,20 +12,30 @@ public class BusGetOffEvntArgs : EventArgs
     public bool IsPlayerPushBtn;
 }
 
+public class PlayerGetOffBusEvntArgs : EventArgs
+{
+
+}
+
+
 
 public class PlayerRideBus : MonoBehaviour
 {
 
-    public BusCollider busCollider;
-    public GameObject pushButton;
+    public BusCollider[] busCollider;
+    public GameObject[] pushButton;
 
     private Transform bus;
+    private GameObject busColliderobj;
     private GameObject playerSeat;
-    //public GameObject busRideUI;
     public bool IsClicked;
     public bool IsGetOff;
     public Transform Bus1_BusStopParent;
-    private Transform[] BusStopSpawnPos;
+    public Transform Bus2_BusStopParent;
+    public Transform[] BusStopSpawnPos;
+    public Transform[] BusStopSpawnPos1;
+    public Transform tutorialgetoffPosition;
+    public EventHandler PlayerGetOffBusEvnt;
 
     //tutorial
     public bool IsPlayerPushBtn;
@@ -37,6 +47,8 @@ public class PlayerRideBus : MonoBehaviour
 
     private bool isonce;
 
+    
+
     enum BusStopName
     {
         Forest,
@@ -47,38 +59,55 @@ public class PlayerRideBus : MonoBehaviour
         Winona,
         Custer,
         Boston,
-        Tennyson
+        Tennyson,
 
     }
-
-
+    
     // Start is called before the first frame update
     void Start()
     {
         IsClicked = false;
- 
-        //busRideUI.SetActive(false);
-        busCollider.PlayerEnterBusEvnt += new EventHandler(ShowUI);
+
+
+
         if (IsTutorial)
         {
-            //busCollider.PlayerEnterBusEvnt += new EventHandler(GameObjectSetting);
             Mom1.SetActive(false);
             Mom2.SetActive(false);
         }
-        busCollider.PlayerEnterBusEvnt += new EventHandler(GameObjectSetting);
-        busCollider.ArrivedNearBusStopEvnt += new EventHandler(CheckGetOff);
-        BusStopSpawnPos = new Transform[Bus1_BusStopParent.childCount];
-
-
-        for (int i = 0; i < 9; i++)
+        else
         {
-            BusStopSpawnPos[i] = Bus1_BusStopParent.GetChild(i).GetChild(0);
-            
+            BusStopSpawnPos = new Transform[Bus1_BusStopParent.childCount];
+            BusStopSpawnPos1 = new Transform[Bus2_BusStopParent.childCount];
+            for (int i = 0; i < 9; i++)
+            {
+                BusStopSpawnPos[i] = Bus1_BusStopParent.GetChild(i).GetChild(0);
+
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                BusStopSpawnPos1[i] = Bus2_BusStopParent.GetChild(i).GetChild(0);
+            }
         }
 
-        //button pushed event
-        UnityEvent pressEvnt = pushButton.GetComponent<XRPushButton>().m_OnPress;
-        pressEvnt.AddListener(GetOffBus);
+        for (int i = 0; i < busCollider.Length; i++)
+        {
+            busCollider[i].PlayerEnterBusEvnt += new EventHandler(ShowUI);
+
+            busCollider[i].PlayerEnterBusEvnt += new EventHandler(GameObjectSetting);
+            busCollider[i].ArrivedNearBusStopEvnt += new EventHandler(CheckGetOff);
+
+        }
+
+
+        for (int i = 0; i < pushButton.Length; i++)
+        {
+            //button pushed event
+            UnityEvent pressEvnt = pushButton[i].GetComponent<XRPushButton>().m_OnPress;
+            pressEvnt.AddListener(GetOffBus);
+        }
+        
     }
 
     private void Update()
@@ -121,6 +150,7 @@ public class PlayerRideBus : MonoBehaviour
         PlayerEnterBusEvntArgs arg = e as PlayerEnterBusEvntArgs;
         playerSeat = arg.bus.transform.parent.transform.Find("PlayerSeat").gameObject;
         bus = arg.bus.transform.parent;
+        busColliderobj = arg.bus;
         IsClicked = true;
         
 
@@ -150,17 +180,47 @@ public class PlayerRideBus : MonoBehaviour
             return;
         }
 
+        
 
         ArrivedNearBusStopEvntArgs arg = e as ArrivedNearBusStopEvntArgs;
+        GameObject eventBus = arg.bus;
+        if (eventBus != busColliderobj)
+            return;
+
         string currentBusStop = arg.currentBusStopName;
+        int busdirection = arg.busdirection; // 0: forward, 1:back
+
         BusStopName currentBusStopName = (BusStopName)Enum.Parse(typeof(BusStopName), $"{currentBusStop}");
         int currentBusStopnInt = (int)currentBusStopName;
 
         gameObject.transform.SetParent(null);
-        gameObject.transform.position = BusStopSpawnPos[currentBusStopnInt].position;
+
+        PlayerGetOffBusEvntArgs arg1 = new PlayerGetOffBusEvntArgs { };
+        this.PlayerGetOffBusEvnt(this, arg1);
+
+        if (!IsTutorial)
+        {
+            if (busdirection == 0)
+            {
+                gameObject.transform.position = BusStopSpawnPos[currentBusStopnInt].position;
+            }
+            else
+            {
+                gameObject.transform.position = BusStopSpawnPos1[currentBusStopnInt].position;
+            }
+        }
+        else
+        {
+            gameObject.transform.position = tutorialgetoffPosition.position;
+        }
+        
+        
+        
         gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
         IsGetOff = false;
         IsClicked = false;
+        IsPlayerPushBtn = false;
+        isonce = false;
         if (IsTutorial)
         {
             Mom2.SetActive(false);

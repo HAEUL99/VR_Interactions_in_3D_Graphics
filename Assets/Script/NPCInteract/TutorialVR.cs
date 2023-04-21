@@ -18,6 +18,7 @@ public class TutorialVR : MonoBehaviour
 
     private void vrInteractionTutorial(object sender, EventArgs e)
     {
+        Debug.Log("실행");
         dialogueImg.SetActive(false);
         dialogueText.text = string.Empty;
 

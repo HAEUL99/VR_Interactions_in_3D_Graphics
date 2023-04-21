@@ -7,17 +7,17 @@ using UnityEngine.InputSystem;
 
 public class CanvasControl : MonoBehaviour
 {
-    
-    public InputAction buttonAction;
-    private GameObject canvas;
-    private bool IsOpen;
 
+    public InputAction leftPri, rightPri;
+    public GameObject mapUI, listUI;
+    public bool ismapOpen, islistOpen; 
 
     private void Start()
     {
-        buttonAction.Enable();
-        IsOpen = false;
-        canvas = GameObject.Find("Canvas");
+        leftPri.Enable();
+        rightPri.Enable();
+        mapUI.SetActive(false);
+        listUI.SetActive(false);
 
 
     }
@@ -25,20 +25,34 @@ public class CanvasControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     
-        if (buttonAction.triggered || Input.GetKeyDown(KeyCode.Space))
+
+        if (leftPri.triggered || Input.GetKeyDown(KeyCode.C)) //list
         {
-            if (IsOpen)
+            if (!ismapOpen) //false
             {
-                canvas.SetActive(false);
-                IsOpen = !IsOpen;
+                listUI.SetActive(true);
             }
-            else
+            else //true
             {
-                canvas.SetActive(true);
-                IsOpen = !IsOpen;
+                listUI.SetActive(false);
             }
+            ismapOpen = !ismapOpen;
         }
+
+        if (rightPri.triggered || Input.GetKeyDown(KeyCode.D)) //map
+        {
+            if (!islistOpen) //false
+            {
+                mapUI.SetActive(true);
+            }
+            else //true
+            {
+                mapUI.SetActive(false);
+            }
+            islistOpen = !islistOpen;
+        }
+            
+           
 
     }
     

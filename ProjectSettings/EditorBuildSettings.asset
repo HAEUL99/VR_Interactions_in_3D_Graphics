@@ -5,9 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/MapScene_VR_1.unity
-    guid: 36a0ec73cf8064ce88b401e8e0ccc3cf
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/MapScene_VR.unity
     guid: 6185f9d097fd1431c95be68bb2116f5f

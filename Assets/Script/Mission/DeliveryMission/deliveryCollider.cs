@@ -23,7 +23,8 @@ public class deliveryCollider : MonoBehaviour
     private GameObject[] boxObjs;
 
     private Boxes[] boxes;
-    private bool IsChecked;
+    public bool IsChecked;
+    public int count;
 
     public event EventHandler AllBoxesInTruck;
 
@@ -75,7 +76,7 @@ public class deliveryCollider : MonoBehaviour
     
     private bool CheckIsAllInTruck()
     {
-        int count = 0;
+        count = 0;
         for (int i = 0; i < boxObjs.Length; i++)
         {
             if (boxes[i].IsIn)
@@ -94,11 +95,16 @@ public class deliveryCollider : MonoBehaviour
         if (CheckIsAllInTruck() && IsChecked == false)
         {
             IsChecked = true;
-            AllBoxesInTruckArgs arg = new AllBoxesInTruckArgs();
-            this.AllBoxesInTruck(this, arg);
+            CompletedeliveryMission();
+            return;
 
         }
 
+    }
+
+    private void CompletedeliveryMission()
+    {
+        Debug.Log("delivery");
     }
 
 }

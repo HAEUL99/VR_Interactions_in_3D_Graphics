@@ -25,25 +25,29 @@ public class NPCInteractable : MonoBehaviour
     public int maxVisibleCharacters;
     public DialogueAudioInfoSO currentAudioInfo;
     private AudioSource audioSource;
-    //ui
-    public GameObject InteractUI;
-    public bool isShowInteractUI;
+
     public bool isInput;
 
+
     //vr interaction
-    public InputAction rightSecond;
+    //public InputAction rightSecond;
 
     private void Start()
     {
-        InteractUI.SetActive(false);
-        showdialogue.VRInteractionTutorialEvnt += new EventHandler(ShowInteractUI);
+        //InteractUI.SetActive(false);
+        //showdialogue.VRInteractionTutorialEvnt += new EventHandler(ShowInteractUI);
 
-        rightSecond.Enable();
+        //rightSecond.Enable();
+        dialogueObj.SetActive(false);
         gameObject.SetActive(false);
+
+        
+        dialogueText.text = string.Empty;
+
 
     }
 
-    
+    /*
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -56,23 +60,24 @@ public class NPCInteractable : MonoBehaviour
             }
         }
     }
-    
+    */
     private void Update()
     {
-        
+        /*
         if (Input.GetKeyDown(KeyCode.E) || rightSecond.triggered)
         {
             isInput = true;
         }
-        /*
+        */
+        
         if (isInput == true)
         {
             Interact();
         }
-        */
+       
     }
 
-    
+    /*
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -85,7 +90,7 @@ public class NPCInteractable : MonoBehaviour
     {
         isWaiting = true;
     }
-
+    */
     public void Interact()
     {
         dialogueImg.SetActive(true);

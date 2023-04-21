@@ -16,12 +16,15 @@ public class MomInteractable : MonoBehaviour
     public GameObject Mom_before;
     public GameObject Mom_after;
 
-    
+    //ui
+    public GameObject InteractUI;
+
+
 
     public void Start()
     {
         //Mom_after.SetActive(false);
-
+        InteractUI.SetActive(false);
         momNPC_Nav.WaitingPlayerFinishTutorialEvnt += new EventHandler(ChangeMomChar);
         //hoverStateVisuals.SetActive(false);
         //keyBoardInput.CompleteEnterNick += new EventHandler(CharMomDisable);
@@ -32,6 +35,16 @@ public class MomInteractable : MonoBehaviour
     public void ActivatetheMomDialogue()
     {
         npcInteractable.isInput = true;
+    }
+
+    public void ActivatetheUI()
+    {
+        InteractUI.SetActive(true);
+    }
+
+    public void deativatetheUI()
+    {
+        InteractUI.SetActive(false);
     }
 
     public void ChangeMomChar(object sender, EventArgs e)
