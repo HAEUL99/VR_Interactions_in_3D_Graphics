@@ -27,6 +27,7 @@ public class NPCInteractable : MonoBehaviour
     private AudioSource audioSource;
 
     public bool isInput;
+    public bool isChecked;
 
 
     //vr interaction
@@ -34,10 +35,7 @@ public class NPCInteractable : MonoBehaviour
 
     private void Start()
     {
-        //InteractUI.SetActive(false);
-        //showdialogue.VRInteractionTutorialEvnt += new EventHandler(ShowInteractUI);
 
-        //rightSecond.Enable();
         dialogueObj.SetActive(false);
         gameObject.SetActive(false);
 
@@ -47,50 +45,17 @@ public class NPCInteractable : MonoBehaviour
 
     }
 
-    /*
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            InteractUI.SetActive(true);
-            if (isShowInteractUI == false && isInput)
-            {
-                isShowInteractUI = true;
-                Interact();
-            }
-        }
-    }
-    */
+
     private void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.E) || rightSecond.triggered)
+        if (isInput == true && isChecked == false)
         {
-            isInput = true;
-        }
-        */
-        
-        if (isInput == true)
-        {
+            isChecked = true;
             Interact();
         }
        
     }
 
-    /*
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            InteractUI.SetActive(false);
-        }
-    }
-    
-    private void ShowInteractUI(object sender, EventArgs e)
-    {
-        isWaiting = true;
-    }
-    */
     public void Interact()
     {
         dialogueImg.SetActive(true);

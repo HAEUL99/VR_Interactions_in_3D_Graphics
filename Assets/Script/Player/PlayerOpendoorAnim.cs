@@ -8,15 +8,14 @@ public class PlayerOpendoorAnim : MonoBehaviour
 {
     public NPCInteractable npcInteractable;
     private Animator animator;
-    private bool IsEvntSend = false;
-
-    //public CameraFade cameraFade;
+    public FadeScreen fadeScreen;
 
     private void Start()
     {
         npcInteractable.FinishTutorialEvnt += new EventHandler(StartAnim);
         animator = gameObject.GetComponent<Animator>();
         gameObject.SetActive(false);
+
     }
 
     private void StartAnim(object sender, EventArgs e)
@@ -26,16 +25,30 @@ public class PlayerOpendoorAnim : MonoBehaviour
         StartCoroutine(CompletedDialogue());
     }
 
-
+    
     IEnumerator CompletedDialogue()
     {
-        yield return new WaitForSeconds(0.8f);
-        //cameraFade.m_IsFading = false;
-        //cameraFade.FadeOut(1.2f, true);
-        yield return new WaitForSeconds(1.1f);
-        SceneManager.LoadScene("MapScene_VR");
+       
+        //ield return new WaitForSeconds(0.5f);
+        fadeScreen.FadeOut();
+        //yield return new WaitForSeconds(fadeScreen.fadeDuration);
+
+        
+        AsyncOperation operation  = SceneManager.LoadSceneAsync("MapScene_VR");
+        operation.allowSceneActivation = false;
+
+        float timer = 0;
+        while (timer <= fadeScreen.fadeDuration && !operation.isDone)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        operation.allowSceneActivation = true;
+        
 
     }
+    
  
 
 

@@ -19,6 +19,8 @@ public class MomInteractable : MonoBehaviour
     //ui
     public GameObject InteractUI;
 
+    public bool TestCodeforSceneFadeOut;
+    public bool isChecked;
 
 
     public void Start()
@@ -46,6 +48,8 @@ public class MomInteractable : MonoBehaviour
     {
         InteractUI.SetActive(false);
     }
+
+
 
     public void ChangeMomChar(object sender, EventArgs e)
     {
