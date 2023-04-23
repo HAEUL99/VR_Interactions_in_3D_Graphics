@@ -5,6 +5,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using EnumManager;
 
 public class DetailRoutine : MonoBehaviour
 {
@@ -40,11 +41,17 @@ public class DetailRoutine : MonoBehaviour
     public TMP_Text ThirdDestTxt;
     public TMP_Text destNameTxt;
     public String destname;
+    
 
     //only walk
     public GameObject DetailRout_walk;
     public TMP_Text firstDestTxt_walk;
     public TMP_Text destNameTxt_walk;
+
+
+    //bus station
+    public List<int> stationsInt;
+    public List<string> stationsString;
 
 
     // Start is called before the first frame update
@@ -56,7 +63,9 @@ public class DetailRoutine : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Transform>();
         listofRout.ClickedRecomBtnEvnt += new EventHandler(ShowUpUI);
         listofDest.ClickCorrectDestEvnt += new EventHandler(SetDestinationName);
+        listofRout.ClickedRecomBtnEvnt += new EventHandler(SetStationsName);
         nav.reDrawLineEvt += new EventHandler(CalCameraPos);
+
         expandBtn = GameObject.Find("ExpandBtn").GetComponent<Button>();
         expandBtn_walk = GameObject.Find("ExpandBtn_walk").GetComponent<Button>();
         expandBtn.onClick.AddListener(MoveUpUI);
@@ -65,9 +74,20 @@ public class DetailRoutine : MonoBehaviour
         buttons[1].onClick.AddListener(ToBusStop);
         buttons[2].onClick.AddListener(ToDest);
 
+
+
+
+    }
+    void SetStationsName(object sender, EventArgs e)
+    {
+        stationsInt = drawLine.stations;
+
+        for(int i = 0; i<stationsInt.Count;i++)
+        {
+            string stationName = Enum.GetName(typeof(EnumManager.Station), i);
+            stationsString.Add(stationName);
+        }
         
-
-
     }
 
     void SetDestinationName(object sender, EventArgs e)
