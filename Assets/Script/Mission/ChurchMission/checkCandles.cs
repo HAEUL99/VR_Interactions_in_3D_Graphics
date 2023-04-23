@@ -2,7 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using EnumManager;
 
+public class churchCandleMissionComplArgs : EventArgs
+{
+    public MissionType _missionType;
+}
 
 public class checkCandles : MonoBehaviour
 {
@@ -24,6 +29,9 @@ public class checkCandles : MonoBehaviour
     private GameObject[] candleObjs;
 
     private Candles[] candles;
+
+    public event EventHandler churchCandleMissionCompl;
+
 
     public void Start()
     {
@@ -62,6 +70,12 @@ public class checkCandles : MonoBehaviour
     private void CompletecCandleMission()
     {
         Debug.Log("candle");
+        churchCandleMissionComplArgs arg = new churchCandleMissionComplArgs
+        {
+            _missionType = EnumManager.MissionType.candles
+        };
+        this.churchCandleMissionCompl(this, arg);
+
     }
 
 

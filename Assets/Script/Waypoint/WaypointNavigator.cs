@@ -32,7 +32,7 @@ public class WaypointNavigator : MonoBehaviour
         {
             controller = GetComponent<MomNPC_Nav>();
             arg = new CurrentWaypointNullArgs();
-            
+
         }
         else if (gameObjectName == "SchoolBus")
         {
@@ -42,6 +42,18 @@ public class WaypointNavigator : MonoBehaviour
         {
             controller = GetComponent<VehicleNPCTutorial_Nav>();
         }
+        else if (gameObjectName == "DeliveryTruck")
+        {
+            controller = GetComponent<VehicleTruck_Nav>();
+        }
+        else if (gameObjectName == "church_NPC")
+        {
+            controller = GetComponent<ChurchNPC_Nav>();
+        }
+        else if (gameObjectName == "market_NPC")
+        {
+            controller = GetComponent<MarketNPC_Nav>();
+        }
         else
         {
             controller = GetComponent<VehicleNPC_Nav>();
@@ -50,10 +62,7 @@ public class WaypointNavigator : MonoBehaviour
         controller.SetDestination(currentWaypoint.GetPosition());
     }
 
-    //private void motherCharMove(object sender, EventArgs e)
-    //{
-    //    IsMomFinishedDialogue = true;
-    //}
+
 
     private void Update()
     {

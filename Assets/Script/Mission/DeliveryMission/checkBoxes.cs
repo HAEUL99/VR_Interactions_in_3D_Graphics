@@ -28,9 +28,11 @@ public class checkBoxes : MonoBehaviour
     private GameObject[] boxObjs;
 
     private Boxes[] boxes;
+
+    /*
     public bool IsChecked;
     public int count;
-
+    */
     public event EventHandler deliveryMissionCompl;
 
 
@@ -45,7 +47,9 @@ public class checkBoxes : MonoBehaviour
 
     }
 
+    
 
+    /*
     private void OnTriggerEnter(Collider other)
     {
         //player
@@ -108,6 +112,30 @@ public class checkBoxes : MonoBehaviour
         }
 
     }
+    */
+
+    public void SetUp(int numOfbox)
+    {
+        boxes[numOfbox] = new Boxes(boxObjs[numOfbox], true);
+        int count = 0;
+
+        for (int i = 0; i < boxObjs.Length; i++)
+        {
+            if (boxes[i].IsIn)
+                count++;
+        }
+
+        if (count == boxObjs.Length)
+        {
+            CompletedeliveryMission();
+        }
+    }
+
+    public void SetDown(int numOfbox)
+    {
+        boxes[numOfbox] = new Boxes(boxObjs[numOfbox], false);
+    }
+
 
     private void CompletedeliveryMission()
     {

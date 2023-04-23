@@ -16,19 +16,6 @@ public class VehicleNPC_Nav : CharacterNavigatorController
     public bool IsNearBusStop = false;
     public float stopSpeed = 1f;
 
-    //vehicle wheel Object
-    private float horizontalInput;
-    private float verticalInput;
-    private float currentSteerAngle;
-    private float currentbreakForce;
-    private bool isBreaking;
-
-
-    [SerializeField] private float motorForce = 100f;
-    [SerializeField] private float breakForce = 100f;
-    [SerializeField] private float maxSteerAngle = 100f;
-    [SerializeField] private float DownForceValue = 4000f;
-
 
 
     [SerializeField] private WheelCollider frontLeftWheelCollider;
@@ -41,8 +28,6 @@ public class VehicleNPC_Nav : CharacterNavigatorController
     [SerializeField] private Transform rearLeftWheelTransform;
     [SerializeField] private Transform rearRightWheelTransform;
 
-    private Rigidbody rb;
-    private GameObject centerofMass;
 
 
 

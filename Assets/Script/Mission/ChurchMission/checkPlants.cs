@@ -1,6 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using EnumManager;
+
+public class churchPlantMissionComplArgs : EventArgs
+{
+    public MissionType _missionType;
+}
+
 
 public class checkPlants : MonoBehaviour
 {
@@ -21,7 +29,7 @@ public class checkPlants : MonoBehaviour
 
     private Plants[] plants;
 
-
+    public event EventHandler churchPlantMissionCompl;
     public void Start()
     {
         plants = new Plants[plantObjs.Length];
@@ -53,6 +61,11 @@ public class checkPlants : MonoBehaviour
     private void CompletePlantMission()
     {
         Debug.Log("plants");
+        churchPlantMissionComplArgs arg = new churchPlantMissionComplArgs
+        {
+            _missionType = EnumManager.MissionType.plnats
+        };
+        this.churchPlantMissionCompl(this, arg);
     }
 
 }

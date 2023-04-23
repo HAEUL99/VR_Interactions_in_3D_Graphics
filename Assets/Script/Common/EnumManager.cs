@@ -11,5 +11,19 @@ namespace EnumManager
         boxes,
         prizes,
     };
+
+    public enum Station
+    {
+        Forest,
+        Harmon,
+        Sears,
+        Savannah,
+        Hollywood,
+        Winona,
+        Custer,
+        Boston,
+        Tennyson,
+
+    }
 }
 

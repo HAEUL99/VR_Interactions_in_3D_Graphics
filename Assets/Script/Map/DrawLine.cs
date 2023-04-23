@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.ComponentModel;
+using EnumManager;
 
 public class DrawLine : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class DrawLine : MonoBehaviour
     int marcusIndex;
     int destIndex;
     string destname;
+    int destbusIndex;
 
     //이벤트변수
     Vector3 playerPos;
@@ -71,7 +73,8 @@ public class DrawLine : MonoBehaviour
     }
 
 
-    
+    public List<int> stations;
+
     void Start()
     {
 
@@ -106,6 +109,7 @@ public class DrawLine : MonoBehaviour
 
         listofRout.ClickedRecomBtnEvnt += new EventHandler(DrawDottedLine);
         listofRout.ClickedRecomBtnEvnt += new EventHandler(DrawNavLine);
+        listofRout.ClickedRecomBtnEvnt += new EventHandler(BusStationsName);
 
     }
     
@@ -130,14 +134,17 @@ public class DrawLine : MonoBehaviour
             case "marcus market":
                 destTransform = destPositions[0];
                 marcusIndex = 26;
+                destbusIndex = 7;
                 break;
             case "new life church":
                 destTransform = destPositions[1];
                 marcusIndex = 4;
+                destbusIndex = 1;
                 break;
             case "rachel bookkeeping":
                 destTransform = destPositions[2];
                 marcusIndex = 18;
+                destbusIndex = 4;
                 break;
         }
 
@@ -315,6 +322,7 @@ public class DrawLine : MonoBehaviour
         {
             int num = 0;
             //set the position
+            
             if (busStopIndexinIndex <= marcusIndex)
             {
                 //lineRenderer.positionCount = marcusIndex - busStopIndexinIndex + 1;
@@ -322,6 +330,7 @@ public class DrawLine : MonoBehaviour
                 for (int i = busStopIndexinIndex; i < marcusIndex + 1; i++)
                 {
                     //lineRenderer.SetPosition(num++, points[i].position);
+             
                     int next = i + 1;
                     if (i != marcusIndex)
                     {
@@ -338,6 +347,8 @@ public class DrawLine : MonoBehaviour
                 for (int i = busStopIndexinIndex; i < points.Length; i++)
                 {
                     //lineRenderer.SetPosition(num++, points[i].position);
+             
+
                     int next = i + 1;
                     if (i != points.Length - 1)
                     {
@@ -349,6 +360,8 @@ public class DrawLine : MonoBehaviour
                 for (int i = 0; i < marcusIndex + 1; i++)
                 {
                     //lineRenderer.SetPosition(num++, points[i].position);
+              
+
                     int next = i + 1;
                     if (i != marcusIndex)
                     {
@@ -408,7 +421,6 @@ public class DrawLine : MonoBehaviour
 
 
     }
-
 
     public void DrawNavLine(object sender, EventArgs e)
     {
@@ -484,5 +496,55 @@ public class DrawLine : MonoBehaviour
 
     }
 
-    
+    public void BusStationsName(object sender, EventArgs e)
+    {
+        Debug.Log($"busStopIndex: {busStopIndex}, destinationIndex: {destbusIndex}"); // 9, 26
+
+        stations.Clear();
+        
+        if (IsForward)
+        {
+            if (busStopIndex < destbusIndex)
+            {
+                for (int i = busStopIndex; i <= destbusIndex; i++)
+                {
+                    stations.Add(i);
+                }
+            }
+            if (busStopIndex > destbusIndex)
+            {
+                for (int i = busStopIndex; i <= 8; i++)
+                {
+                    stations.Add(i);
+                }
+                for (int i = 0; i <= destbusIndex; i++)
+                {
+                    stations.Add(i);
+                }
+            }
+        }
+        else
+        {
+            if (busStopIndex > destbusIndex)
+            {
+                for (int i = busStopIndex; i >= destbusIndex; i--)
+                {
+                    stations.Add(i);
+                }
+            }
+            else
+            {
+                for (int i = busStopIndex; i >= 0; i--)
+                {
+                    stations.Add(i);
+                }
+                for (int i = 8; i >= destbusIndex; i--)
+                {
+                    stations.Add(i);
+                }
+            }
+        }
+        
+
+    }
 }
