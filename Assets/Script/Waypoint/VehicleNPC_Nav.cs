@@ -145,6 +145,7 @@ public class VehicleNPC_Nav : CharacterNavigatorController
 
     IEnumerator Stop()
     {
+        busCollider.isNearBusStop = true;
         frontdoorRight.SetBool("IsOpen", true);
         frontdoorLeft.SetBool("IsOpen", true);
 
@@ -159,6 +160,7 @@ public class VehicleNPC_Nav : CharacterNavigatorController
         IsNearBusStop = false;
         frontdoorRight.SetBool("IsOpen", false);
         frontdoorLeft.SetBool("IsOpen", false);
+        busCollider.isNearBusStop = false;
 
     }
 

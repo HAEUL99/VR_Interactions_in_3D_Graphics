@@ -25,6 +25,7 @@ public class BusCollider : MonoBehaviour
     public event EventHandler ArrivedNearBusStopEvnt;
     public event EventHandler PlayerEnterBusEvnt;
     public int Busdirection;
+    public bool isNearBusStop;
 
     void Start()
     {
@@ -41,7 +42,7 @@ public class BusCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //player
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && isNearBusStop)
         {
             PlayerEnterBusEvntArgs arg = new PlayerEnterBusEvntArgs
             {
@@ -58,7 +59,7 @@ public class BusCollider : MonoBehaviour
         //near bus stop
         if (other.gameObject.tag == "busstop")
         {
-
+            //isNearBusStop = true;
             //버스 속도 줄이기 이벤트
             ArrivedNearBusStopEvntArgs arg = new ArrivedNearBusStopEvntArgs
             {
@@ -73,5 +74,7 @@ public class BusCollider : MonoBehaviour
 
     }
 
-   
+
+
+
 }

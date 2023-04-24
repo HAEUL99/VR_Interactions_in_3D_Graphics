@@ -79,7 +79,7 @@ public class TutorialBusGetOff : MonoBehaviour
         
         if (IsPushed)
         {   
-            lines[0] = "Good Job. You got off the bus well ";
+            lines[0] = "Good Job. You did well";
         }
         else
         {

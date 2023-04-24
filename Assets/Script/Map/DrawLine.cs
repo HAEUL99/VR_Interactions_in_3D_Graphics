@@ -117,9 +117,6 @@ public class DrawLine : MonoBehaviour
     public void Init(object sender, EventArgs e)
     {
 
-        
-
-
         reDrawLineEvtArgs args = e as reDrawLineEvtArgs;
         playerPos = player.position;
         pointIndex = args.nearIndex;

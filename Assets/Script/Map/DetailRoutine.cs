@@ -30,9 +30,9 @@ public class DetailRoutine : MonoBehaviour
     // 수정필수
     public Transform[] destPos;
 
-    private Vector3 playerPos;
-    private Vector3 departBusStopPos;
-    private Vector3 arriveBusStopPos;
+    public Vector3 playerPos;
+    public Vector3 departBusStopPos;
+    public Vector3 arriveBusStopPos;
 
     //거리 text
     public DrawLine drawLine;
@@ -52,6 +52,11 @@ public class DetailRoutine : MonoBehaviour
     //bus station
     public List<int> stationsInt;
     public List<string> stationsString;
+    public TMP_Text firstStation;
+    public TMP_Text lastStation;
+    public GameObject busImg;
+    public GameObject busImgParent;
+    public List<GameObject> busStationImgs;
 
 
     // Start is called before the first frame update
@@ -74,12 +79,20 @@ public class DetailRoutine : MonoBehaviour
         buttons[1].onClick.AddListener(ToBusStop);
         buttons[2].onClick.AddListener(ToDest);
 
-
+        busImg = Resources.Load<GameObject>("busImgDynamic");
 
 
     }
     void SetStationsName(object sender, EventArgs e)
     {
+        if (busStationImgs != null)
+        {
+            foreach (GameObject obj in busStationImgs)
+            {
+                Destroy(obj);
+            }
+            busStationImgs.Clear();
+        }
         stationsInt = drawLine.stations;
 
         for(int i = 0; i<stationsInt.Count;i++)
@@ -87,7 +100,42 @@ public class DetailRoutine : MonoBehaviour
             string stationName = Enum.GetName(typeof(EnumManager.Station), i);
             stationsString.Add(stationName);
         }
+
+        if (stationsInt.Count > 1)
+        {
+            firstStation.text = $"{stationsString[0]}";
+            lastStation.text = $"{stationsString[stationsInt.Count - 1]}";
+        }
         
+
+
+        if (stationsInt.Count > 2)
+        {
+            float gap = 250.0f / (stationsInt.Count - 1);
+
+            float firstPosY = 220;
+            for (int i = 0; i < (stationsInt.Count - 2); i++)
+            {
+                GameObject busStation = Instantiate(busImg);
+                busStationImgs.Add(busStation);
+                RectTransform busStationRect = busStation.GetComponent<RectTransform>();
+                
+                busStationRect.SetParent(busImgParent.transform);
+                float posY = firstPosY - gap;
+                firstPosY = posY;
+
+                busStation.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, posY, 0);
+                busStation.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+                busStation.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                busStation.GetComponentInChildren<TMP_Text>().text = $"{stationsString[i + 1]}";
+
+            }
+            
+
+        }
+
+
+
     }
 
     void SetDestinationName(object sender, EventArgs e)
@@ -193,11 +241,19 @@ public class DetailRoutine : MonoBehaviour
         playerPos = player.position;
         departBusStopPos = arg.nearBusStopPos;
         if (string.Equals($"{destname}", "marcus market"))
+        {
+
             arriveBusStopPos = destPos[0].position;
-        if(string.Equals($"{destname}", "new life church"))
+        }
+        if (string.Equals($"{destname}", "new life church"))
+        {
             arriveBusStopPos = destPos[1].position;
+        }
         if(string.Equals($"{destname}", "rachel bookkeeping"))
+        {
             arriveBusStopPos = destPos[2].position;
+
+        }
 
     }
 
