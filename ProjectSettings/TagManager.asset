@@ -12,6 +12,7 @@ TagManager:
   - boxes
   - busforward
   - busback
+  - prizes
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - bus
   - VRObj
   - Player
-  - 
+  - prizes
   - 
   - 
   - 

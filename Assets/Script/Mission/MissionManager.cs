@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using TMPro;
 using UnityEngine.UI;
+using System.Diagnostics;
 
 public class MissionManager : MonoBehaviour
 {
@@ -23,20 +24,24 @@ public class MissionManager : MonoBehaviour
     private GameObject player;
     public Vector3 originalPos;
     public Quaternion originalRot;
+    public GameObject box;
+    public GameObject box1;
 
     //church Mission
     public bool[] churchMissionList;
     public GameObject churchNpc;
+    public GameObject churchDialogue;
 
     //market Mission
     public GameObject marketNpc;
+    public GameObject marketDialogue;
 
     //fade effect
-    public FadeScreen fadeScreen;
+    //public FadeScreen fadeScreen;
     public PlayerControl playerControl;
-    public float deliveryanimDuration = 7f;
-    public float churchanimDuration = 10f;
-    public float marketanimDuration = 10f;
+    private float deliveryanimDuration = 13f;
+    private float churchanimDuration = 13f;
+    private float marketanimDuration = 13f;
 
     //UI
     public TextMeshProUGUI deliverydoneCheck;
@@ -55,6 +60,7 @@ public class MissionManager : MonoBehaviour
         _checkBoxes.deliveryMissionCompl += new EventHandler(ListUISet);
         _checkCandles.churchCandleMissionCompl += new EventHandler(ListUISet);
         _checkPlants.churchPlantMissionCompl += new EventHandler(ListUISet);
+        _checkPrizes.marketMissionCompl += new EventHandler(ListUISet);
         player = GameObject.FindWithTag("Player");
         churchMissionList = new bool[] { false, false };
 
@@ -131,7 +137,11 @@ public class MissionManager : MonoBehaviour
     IEnumerator DisableChurchNPC()
     {
         yield return new WaitForSeconds(churchanimDuration);
-        churchNpc.SetActive(false);
+        //churchNpc.SetActive(false);
+        churchNpc.transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
+        churchDialogue.SetActive(false);
+
+
     }
 
     IEnumerator DisableMarketNPC()
@@ -146,10 +156,10 @@ public class MissionManager : MonoBehaviour
         
         playerControl.DisableMoveandTurn();
         //페이드인 
-        fadeScreen.FadeOut(1f);
+        //fadeScreen.FadeOut(1f);
         //1초후
-        yield return new WaitForSeconds(1f);
-        fadeScreen.FadeIn(1f);
+        //yield return new WaitForSeconds(1f);
+        //fadeScreen.FadeIn(1f);
         
         //플레이어 위치 변경
         FixedPlayerPosition(missionNum);
@@ -161,11 +171,11 @@ public class MissionManager : MonoBehaviour
         if (missionNum == 2)
             yield return new WaitForSeconds(marketanimDuration - 1.0f);
 
-        fadeScreen.FadeOut(1f);
+        //fadeScreen.FadeOut(1f);
         yield return new WaitForSeconds(1f);
         // 자리 리셋
         ReStartPlayerPosition();
-        fadeScreen.FadeIn(1f);
+        //fadeScreen.FadeIn(1f);
         playerControl.EnableMoveandTurn();
        
 
@@ -178,14 +188,16 @@ public class MissionManager : MonoBehaviour
             Buses[i].SetActive(false);
         }
 
-        yield return new WaitForSeconds(deliveryanimDuration);
 
+        yield return new WaitForSeconds(deliveryanimDuration);
+  
         for (int i = 0; i < Buses.Length; i++)
         {
             Buses[i].SetActive(true);
         }
         truck.SetActive(false);
-
+        box.SetActive(false);
+        box1.SetActive(false);
     }
 
     private void FixedPlayerPosition(int missionNum)

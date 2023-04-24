@@ -43,11 +43,15 @@ public class MarketNPC_Nav : CharacterNavigatorController
 
     private void Update()
     {
-        Movement(this.gameObject);
+
 
         if (waypointNavigator.currentWaypoint.name == "Waypoint 4")
         {
             anim.SetBool("IsStop", true);
+        }
+        else 
+        {
+            Movement(this.gameObject);
         }
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Stopwalking") &&
@@ -57,7 +61,15 @@ public class MarketNPC_Nav : CharacterNavigatorController
             IsEvntSend = true;
             DialogueUI.SetActive(true);
             nPCDialogueSound.StartTyping();
-
+            Invoke("ChangeWaypoint", 4f);
         }
     }
+
+    private void ChangeWaypoint()
+    {
+        waypointNavigator.currentWaypoint = waypointNavigator.currentWaypoint.nextWaypoint;
+        anim.SetBool("IsStop", false);
+    }
+
+
 }

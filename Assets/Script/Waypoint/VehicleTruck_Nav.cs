@@ -10,7 +10,7 @@ public class VehicleTruck_Nav : CharacterNavigatorController
 
     public override void Init()
     {
-        movementSpeed = 4;
+        movementSpeed = 5;
         rotationSpeed = 120;
         stopDistance = 2f;
     }
@@ -37,7 +37,7 @@ public class VehicleTruck_Nav : CharacterNavigatorController
         if (waypointNavigator.currentWaypoint.name == "Waypoint 5")
         {
             isFarward = true;
-            movementSpeed = 7;
+            movementSpeed = 13;
         }
         
 

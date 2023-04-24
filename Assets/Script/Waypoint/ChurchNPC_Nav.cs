@@ -43,11 +43,15 @@ public class ChurchNPC_Nav : CharacterNavigatorController
 
     private void Update()
     {
-        Movement(this.gameObject);
 
-        if (waypointNavigator.currentWaypoint.name == "Waypoint 3")
+
+        if (waypointNavigator.currentWaypoint.name == "Waypoint 3" || waypointNavigator.currentWaypoint.name == "Waypoint 7")
         {
             anim.SetBool("IsStop", true);
+        }
+        else
+        {
+            Movement(this.gameObject);
         }
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Stopwalking") &&
@@ -57,8 +61,17 @@ public class ChurchNPC_Nav : CharacterNavigatorController
             IsEvntSend = true;
             DialogueUI.SetActive(true);
             nPCDialogueSound.StartTyping();
-            
+            Invoke("ChangeWaypoint", 4f);
+
         }
+
+
+    }
+
+    private void ChangeWaypoint()
+    {
+        waypointNavigator.currentWaypoint = waypointNavigator.currentWaypoint.nextWaypoint;
+        anim.SetBool("IsStop", false);
     }
 
 
