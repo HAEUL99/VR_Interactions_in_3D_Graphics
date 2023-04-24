@@ -154,7 +154,7 @@ public class MissionManager : MonoBehaviour
     {
 
         
-        playerControl.DisableMoveandTurn();
+        //playerControl.DisableMoveandTurn();
         //페이드인 
         //fadeScreen.FadeOut(1f);
         //1초후
@@ -174,9 +174,9 @@ public class MissionManager : MonoBehaviour
         //fadeScreen.FadeOut(1f);
         yield return new WaitForSeconds(1f);
         // 자리 리셋
-        ReStartPlayerPosition();
+        //ReStartPlayerPosition();
         //fadeScreen.FadeIn(1f);
-        playerControl.EnableMoveandTurn();
+        //playerControl.EnableMoveandTurn();
        
 
     }
