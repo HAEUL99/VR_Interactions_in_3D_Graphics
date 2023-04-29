@@ -135,9 +135,7 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 1.02
-  preloadedAssets:
-  - {fileID: 5169977310734531798, guid: 2289d6f33edc34abbbac768619935117, type: 2}
-  - {fileID: 11400000, guid: f0872d184ca5d0a4d95699746aba7ce8, type: 2}
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -890,7 +888,7 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
-    Build: 0
+    Build: 1
     Collab: 0
     Game Performance: 0
     Purchasing: 0
@@ -911,11 +909,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: fc13ef60-9f67-4f8b-a715-929eee775f48
+  cloudProjectId: b50dbe96-7127-4e73-9985-cd68a6ebb506
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: Mixed Reality in 3D Graphics and Interactions
+  organizationId: lhwool0915
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
