@@ -101,7 +101,7 @@ public class TutorialBusGetOff : MonoBehaviour
             foreach (char c in lines[index].ToCharArray())
             {
                 dialogueText.text += c;
-                PlayDialogueSound(maxVisibleCharacters, dialogueText.text[maxVisibleCharacters]);
+                //PlayDialogueSound(maxVisibleCharacters, dialogueText.text[maxVisibleCharacters]);
                 maxVisibleCharacters++;
                 yield return new WaitForSeconds(textSpeed);
             }
@@ -118,50 +118,9 @@ public class TutorialBusGetOff : MonoBehaviour
     {
         player.transform.position = spawnPoint1.transform.position;
         player.transform.rotation = Quaternion.Euler(0, 180, 0);
-        showDialogue.NextLine();
+        //showDialogue.NextLine();
  
     }
 
-    private void PlayDialogueSound(int currentDisplayedCharacterCount, char currentCharacter)
-    {
-        // set variables for the below based on our config
-        AudioClip[] dialogueTypingSoundClips = currentAudioInfo.dialogueTypingSoundClips;
-        int frequencyLevel = currentAudioInfo.frequencyLevel;
-        float minPitch = currentAudioInfo.minPitch;
-        float maxPitch = currentAudioInfo.maxPitch;
-        bool stopAudioSource = currentAudioInfo.stopAudioSource;
-
-        // play the sound based on the config
-        if (currentDisplayedCharacterCount % frequencyLevel == 0)
-        {
-            if (stopAudioSource)
-            {
-                audioSource.Stop();
-            }
-            AudioClip soundClip = null;
-            // create predictable audio from hashing
-            int hashCode = currentCharacter.GetHashCode();
-            // sound clip
-            int predictableIndex = hashCode % dialogueTypingSoundClips.Length;
-            soundClip = dialogueTypingSoundClips[predictableIndex];
-            // pitch
-            int minPitchInt = (int)(minPitch * 100);
-            int maxPitchInt = (int)(maxPitch * 100);
-            int pitchRangeInt = maxPitchInt - minPitchInt;
-            // cannot divide by 0, so if there is no range then skip the selection
-            if (pitchRangeInt != 0)
-            {
-                int predictablePitchInt = (hashCode % pitchRangeInt) + minPitchInt;
-                float predictablePitch = predictablePitchInt / 100f;
-                audioSource.pitch = predictablePitch;
-            }
-            else
-            {
-                audioSource.pitch = minPitch;
-            }
-
-            // play sound
-            audioSource.PlayOneShot(soundClip);
-        }
-    }
+    
 }

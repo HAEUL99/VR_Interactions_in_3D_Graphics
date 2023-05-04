@@ -14,24 +14,25 @@ public class NPCDialogueSound: MonoBehaviour
     private string[] lines;
     private TextMeshProUGUI dialogueText;
     private float textSpeed = 0.05f;
+    public int index;
 
-  
 
-    public void Init(GameObject thisObj, DialogueAudioInfoSO currentAudioInfo, TextMeshProUGUI dialText, string[] lines)
+
+    public void Init(GameObject thisObj, DialogueAudioInfoSO currentAudioInfo, TextMeshProUGUI dialText, string[] lines, int[] pauseIndex = null)
     {
         audioSource = thisObj.AddComponent<AudioSource>();
         dialogueText = dialText;
         this.lines = lines;
         this.currentAudioInfo = currentAudioInfo;
-
+        this.index = 0;
 
 
     }
-
+    
     public IEnumerator TypeDialogue(int index)
     {
-        int idx = index;
-        if (idx == lines.Length)
+        this.index = index;
+        if (this.index == lines.Length)
             yield break;
 
         yield return new WaitForSeconds(1.0f);
@@ -39,7 +40,7 @@ public class NPCDialogueSound: MonoBehaviour
         maxVisibleCharacters = 0;
 
         
-        foreach (char c in lines[idx].ToCharArray())
+        foreach (char c in lines[this.index].ToCharArray())
         {
             dialogueText.text += c;
 
@@ -53,13 +54,55 @@ public class NPCDialogueSound: MonoBehaviour
         
 
     }
+    /*
+    public IEnumerator TypeDialogue(int index, bool isEvent)
+    {
+        this.index = index;
+        if (this.index == lines.Length)
+            yield break;
 
+        yield return new WaitForSeconds(1.0f);
+        dialogueText.text = string.Empty;
+        maxVisibleCharacters = 0;
+
+
+        foreach (char c in lines[this.index].ToCharArray())
+        {
+            dialogueText.text += c;
+
+            PlayDialogueSound(maxVisibleCharacters, dialogueText.text[maxVisibleCharacters]);
+            maxVisibleCharacters++;
+            yield return new WaitForSeconds(textSpeed);
+        }
+
+        if (isEvent && index )
+        {
+            
+        }
+        else
+        {
+            StartCoroutine(TypeDialogue(++index, false));
+        }
+        
+
+
+    }
+    */
+
+    
     public void StartTyping()
     {
         StartCoroutine(TypeDialogue(0));
+
+    }
+    /*
+    public void StartTyping(bool isEvent)
+    {
+        StartCoroutine(TypeDialogue(0, false));
+
     }
 
-
+    */
     public void PlayDialogueSound(int currentDisplayedCharacterCount, char currentCharacter)
     {
         // set variables for the below based on our config

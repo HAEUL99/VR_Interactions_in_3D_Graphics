@@ -495,8 +495,6 @@ public class DrawLine : MonoBehaviour
 
     public void BusStationsName(object sender, EventArgs e)
     {
-        Debug.Log($"busStopIndex: {busStopIndex}, destinationIndex: {destbusIndex}"); // 9, 26
-
         stations.Clear();
         
         if (IsForward)

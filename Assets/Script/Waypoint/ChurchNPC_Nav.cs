@@ -10,13 +10,14 @@ public class ChurchNPC_Nav : CharacterNavigatorController
     private bool IsEvntSend;
     public GameObject DialogueUI;
 
+    public string[] lines;
+    public TextMeshProUGUI dialText;
+
+
     //sound
     public int maxVisibleCharacters;
     public DialogueAudioInfoSO currentAudioInfo;
-
-    public string[] lines;
-    public TextMeshProUGUI dialText;
-    private NPCDialogueSound nPCDialogueSound;
+    private NPCDialogueSound npcDialogueSound;
 
     public override void Init()
     {
@@ -34,8 +35,8 @@ public class ChurchNPC_Nav : CharacterNavigatorController
         DialogueUI.SetActive(false);
 
 
-        nPCDialogueSound = gameObject.AddComponent<NPCDialogueSound>();
-        nPCDialogueSound.Init(gameObject, currentAudioInfo, dialText, lines);
+        npcDialogueSound = gameObject.AddComponent<NPCDialogueSound>();
+        npcDialogueSound.Init(gameObject, currentAudioInfo, dialText, lines);
 
         gameObject.SetActive(false);
     }
@@ -60,7 +61,7 @@ public class ChurchNPC_Nav : CharacterNavigatorController
             //anim.SetBool("IsTalk", true);
             IsEvntSend = true;
             DialogueUI.SetActive(true);
-            nPCDialogueSound.StartTyping();
+            npcDialogueSound.StartTyping();
             Invoke("ChangeWaypoint", 4f);
 
         }
